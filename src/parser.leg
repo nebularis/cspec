@@ -18,23 +18,42 @@
     printf("Suite *suite_%d = Suite_new(%s);\n", nsuites++, S);
     
   #define SPEC(S) \
-    printf("Block *block_%d = Block_new(blockTypeSpec, %s, &block_%s_callback);\n", nblocks++, S, S); \
-    printf("Suite_push_block(suite_%d, block_%d);\n", nsuites, nblocks);
+    BLOCK("Spec", S) \
+    printf("Suite_push_block(suite_%d, block_%d);\n", nsuites, nblocks-1);
+        
+  #define BLOCK(S, D) \
+    printf("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
+    nblocks++;
+    
+  #define CODE(S) \
+    printf("void block_%d_callback() {\n %s \n}\n", nblocks-1, S);
   
   static int nsuites = 0;
   static int nblocks = 0;
     
 %}
 
-  main         = suite
+  main         = suite 
+               | block a:source                           { CODE(a) }
+               | spec a:source                            { CODE(a) }
                | < . >                                    { OUT }
+            
+  suite        = 'describe' s a:string                    { SUITE(a) } 
+
+  spec         = 'it' s a:string                          { SPEC(a) }
                
-  suite        = 'description' s a:string                 { SUITE(a) }
-                                                         
+  block        = b 'before' b                             { BLOCK("Before", NULL) }
+               | b 'before each' b                        { BLOCK("BeforeEach", NULL) }
+               | b 'after' b                              { BLOCK("After", NULL) }
+               | b 'after each' b                         { BLOCK("AfterEach", NULL) }
+               
+  source       = < (!end .)+ > end                        { DUP }
+               
   string       = < '\'' (!'\'' .)* '\'' >                 { DUP }
                | < '"' (!'"' .)* '"' >                    { DUP }
 
-  end          = 'end'                                    
+  end          = b 'end' b                                    
+  b            = [ \t] | nl
   EOL          = nl | EOF                                
   EOF          = !.                                      
   nl           = '\n' | '\r\n' | '\r'                    
@@ -44,6 +63,8 @@
 %%
 
 int main() {
+  printf("void test() {\n");
   while (YYPARSE()) ;
+  printf("\n}\n");
   return 0;
 }
