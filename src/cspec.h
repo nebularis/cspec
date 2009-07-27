@@ -53,6 +53,9 @@ void
 Suite_run(Suite *self);
 
 void
+Suite_run_spec(Suite *self, Block *spec);
+
+void
 Suite_run_blocks(Suite *self, blockType type);
 
 void

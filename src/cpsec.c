@@ -31,12 +31,16 @@ void
 Suite_run(Suite *self) {
   Suite_run_blocks(self, blockTypeBefore);
   for (int i = 0; i < self->nblocks; ++i) 
-    if (self->blocks[i]->type == blockTypeSpec) {
-      Suite_run_blocks(self, blockTypeBeforeEach);
-      self->blocks[i]->func();
-      Suite_run_blocks(self, blockTypeAfterEach);
-    }
+    if (self->blocks[i]->type == blockTypeSpec)
+      Suite_run_spec(self, self->blocks[i]);
   Suite_run_blocks(self, blockTypeAfter);
+}
+
+void
+Suite_run_spec(Suite *self, Block *spec) {
+  Suite_run_blocks(self, blockTypeBeforeEach);
+  spec->func();
+  Suite_run_blocks(self, blockTypeAfterEach);
 }
 
 void
