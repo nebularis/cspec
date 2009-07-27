@@ -43,6 +43,9 @@ typedef struct _Suite {
   struct _Suite **suites;
 } Suite;
 
+void
+expect(int expr, char *source);
+
 Block *
 Block_new(blockType type, char *description, callback func);
 

@@ -410,10 +410,8 @@ YY_PARSE(int) YYPARSE(void)
 #endif
 
 
-void
-cspec_should_work() {
-  puts("should work");
-}
+void cspec_should_pass() { expect(1 == 1, "1 == 1"); }
+void cspec_should_fail() { expect(0, "0"); }
 
 void
 cspec_before(){
@@ -423,8 +421,8 @@ cspec_before(){
 int main() {
   Suite *suite = Suite_new("CSpec");
   Block *before = Block_new(blockTypeBefore, NULL, &cspec_before);
-  Block *should_work = Block_new(blockTypeSpec, "should work", &cspec_should_work);
-  Block *should_work_again = Block_new(blockTypeSpec, "should work again", &cspec_should_work);
+  Block *should_work = Block_new(blockTypeSpec, "should pass", &cspec_should_pass);
+  Block *should_work_again = Block_new(blockTypeSpec, "should fail", &cspec_should_fail);
   Suite_push_block(suite, before);
   Suite_push_block(suite, should_work);
   Suite_push_block(suite, should_work_again);

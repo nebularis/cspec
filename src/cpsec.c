@@ -10,6 +10,12 @@
 Suite *current_suite = NULL;
 Block *current_spec = NULL;
 
+void 
+expect(int passed, char *source) {
+  if (passed) putchar('.');
+  else printf("\n\033[1;31mfailed `%s'\033[0m\n", source);
+}
+
 Block *
 Block_new(blockType type, char *description, callback func) {
   INIT(Block);
