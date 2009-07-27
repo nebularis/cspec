@@ -7,6 +7,9 @@
 
 #include "cspec.h"
 
+Suite *current_suite = NULL;
+Block *current_spec = NULL;
+
 Block *
 Block_new(blockType type, char *description, callback func) {
   INIT(Block);
@@ -29,6 +32,7 @@ Suite_new(char *description) {
 
 void
 Suite_run(Suite *self) {
+  current_suite = self;
   Suite_run_blocks(self, blockTypeBefore);
   for (int i = 0; i < self->nblocks; ++i) 
     if (self->blocks[i]->type == blockTypeSpec)
@@ -38,6 +42,7 @@ Suite_run(Suite *self) {
 
 void
 Suite_run_spec(Suite *self, Block *spec) {
+  current_spec = spec;
   Suite_run_blocks(self, blockTypeBeforeEach);
   spec->func();
   Suite_run_blocks(self, blockTypeAfterEach);
