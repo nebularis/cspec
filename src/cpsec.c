@@ -12,8 +12,8 @@ Block *current_spec = NULL;
 
 void 
 expect(int passed, char *source) {
-  if (passed) putchar('.');
-  else printf("\n\033[1;31mfailed `%s'\033[0m\n", source);
+  if (passed) printf("\033[1;32m%c\033[0m", '.');
+  else printf("\n\033[0;31m      failed:\n        %s\033[0m\n", source);
 }
 
 Block *
@@ -39,16 +39,19 @@ Suite_new(char *description) {
 void
 Suite_run(Suite *self) {
   current_suite = self;
+  printf("\n\033[1;01m  %s\033[0m", self->description);
   Suite_run_blocks(self, blockTypeBefore);
   for (int i = 0; i < self->nblocks; ++i) 
     if (self->blocks[i]->type == blockTypeSpec)
       Suite_run_spec(self, self->blocks[i]);
   Suite_run_blocks(self, blockTypeAfter);
+  printf("\n\n");
 }
 
 void
 Suite_run_spec(Suite *self, Block *spec) {
   current_spec = spec;
+  printf("\n\033[0;32m    %s\033[0m ", spec->description);
   Suite_run_blocks(self, blockTypeBeforeEach);
   spec->func();
   Suite_run_blocks(self, blockTypeAfterEach);

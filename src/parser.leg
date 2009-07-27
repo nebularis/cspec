@@ -30,12 +30,10 @@
 %%
 
 void cspec_should_pass() { expect(1 == 1, "1 == 1"); }
-void cspec_should_fail() { expect(0, "0"); }
+void cspec_should_fail() { expect("test" == "foobar", "\"test\" == \"foobar\""); }
 
 void
-cspec_before(){
-  puts("before");
-}
+cspec_before(){}
 
 int main() {
   Suite *suite = Suite_new("CSpec");
@@ -45,6 +43,9 @@ int main() {
   Suite_push_block(suite, before);
   Suite_push_block(suite, should_work);
   Suite_push_block(suite, should_work_again);
+  Suite_push_block(suite, should_work);
+  Suite_push_block(suite, should_work_again);
+  Suite_push_block(suite, should_work);
   Suite_run(suite);
   // while (YYPARSE()) ;
   return 0;
