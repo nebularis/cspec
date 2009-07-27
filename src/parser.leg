@@ -36,6 +36,7 @@
   main         = suite 
                | block a:source                           { CODE(a) }
                | spec a:source                            { CODE(a) }
+               | end
                | < . >                                    { OUT }
             
   suite        = 'describe' s a:string                    { SUITE(a) } 
