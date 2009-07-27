@@ -33,15 +33,14 @@
     
 %}
 
-  main         = suite 
-               | block a:source                           { CODE(a) }
-               | spec a:source                            { CODE(a) }
-               | end
-               | < . >                                    { OUT }
+  main         = < (!'describe' .)+ >                     { OUT }
+               | suite
             
   suite        = 'describe' s a:string                    { SUITE(a) } 
+               (ws | spec | block | suite)*
+               end
 
-  spec         = 'it' s a:string                          { SPEC(a) }
+  spec         = 'it' s a:string b:source end             { CODE(b); SPEC(a) }
                
   block        = b 'before' b                             { BLOCK("Before", NULL) }
                | b 'before each' b                        { BLOCK("BeforeEach", NULL) }
@@ -53,6 +52,7 @@
   string       = < '\'' (!'\'' .)* '\'' >                 { DUP }
                | < '"' (!'"' .)* '"' >                    { DUP }
 
+  ws           = [ \t] | nl
   end          = b 'end' b                                    
   b            = [ \t] | nl
   EOL          = nl | EOF                                
