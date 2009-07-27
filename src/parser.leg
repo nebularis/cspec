@@ -1,0 +1,53 @@
+
+%{
+  #include "cspec.h"
+
+  #define YYSTYPE char *
+
+  #define DUP yy = strdup(yytext)
+  
+  #define YY_INPUT(buf, result, max_size) { \
+      int yyc = getc(stdin); \
+      result = (EOF == yyc) ? 0 : (*(buf) = yyc, 1); \
+      yyprintf((stderr, "<%c>", yyc)); \
+    }
+  
+%}
+
+  main         = 'test'
+               | .
+                                                         
+  string       = < '\'' (!'\'' .)* '\'' >                 { DUP }
+               | < '"' (!'"' .)* '"' >                    { DUP }
+
+  end          = 'end'                                    
+  EOL          = nl | EOF                                
+  EOF          = !.                                      
+  nl           = '\n' | '\r\n' | '\r'                    
+  s            = [ \t]+                                  
+  -            = [ \t]*                                  
+                                                         
+%%
+
+void
+cspec_should_work() {
+  puts("should work");
+}
+
+void
+cspec_before(){
+  puts("before");
+}
+
+int main() {
+  Suite *suite = Suite_new("CSpec");
+  Block *before = Block_new(blockTypeBefore, NULL, &cspec_before);
+  Block *should_work = Block_new(blockTypeSpec, "should work", &cspec_should_work);
+  Block *should_work_again = Block_new(blockTypeSpec, "should work again", &cspec_should_work);
+  Suite_push_block(suite, before);
+  Suite_push_block(suite, should_work);
+  Suite_push_block(suite, should_work_again);
+  Suite_run(suite);
+  // while (YYPARSE()) ;
+  return 0;
+}
