@@ -26,10 +26,8 @@
         
   #define BLOCK(S, D) \
     printf("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
+    printf("void block_%d_callback() %c\n", nblocks, LPAREN); \
     nblocks++;
-    
-  #define CODE(S) \
-    printf("void block_%d_callback() {\n %s \n}\n", nblocks-1, S);
   
   static int nsuites = 0;
   static int nblocks = 0;
@@ -37,26 +35,22 @@
 %}
 
   main         = < (!'describe' .)+ >                     { OUT }
-               | suite
+               ( suite
                | spec
                | block
                | end                                      { printf("\n%c\n", RPAREN) }
                | < . >                                    { printf("%s", yytext) }
+               )*
             
   suite        = 'describe' s a:string                    { SUITE(a) } 
 
   spec         = 'it' s a:string                          { SPEC(a) }
                
-  block        = 
-               ( ws 'before each' ws                      { BLOCK("BeforeEach", NULL) }
+  block        = ( ws 'before each' ws                    { BLOCK("BeforeEach", NULL) }
                | ws 'before' ws                           { BLOCK("Before", NULL) }
                | ws 'after each' ws                       { BLOCK("AfterEach", NULL) }
                | ws 'after' ws                            { BLOCK("After", NULL) }
                )                            
-               a:source                                   { CODE(a) }
-               end
-               
-  source       = < (!end .)+ >                            { DUP }
                
   string       = < '\'' (!'\'' .)* '\'' >                 { DUP }
                | < '"' (!'"' .)* '"' >                    { DUP }
