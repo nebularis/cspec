@@ -430,9 +430,9 @@ YY_RULE(int) yy_block()
   {  int yypos23= yypos, yythunkpos23= yythunkpos;  if (!yy_b()) goto l24;  if (!yymatchString("before each")) goto l24;  if (!yy_b()) goto l24;  yyDo(yy_1_block, yybegin, yyend);  goto l23;
   l24:;	  yypos= yypos23; yythunkpos= yythunkpos23;  if (!yy_b()) goto l25;  if (!yymatchString("before")) goto l25;  if (!yy_b()) goto l25;  yyDo(yy_2_block, yybegin, yyend);  goto l23;
   l25:;	  yypos= yypos23; yythunkpos= yythunkpos23;  if (!yy_b()) goto l26;  if (!yymatchString("after each")) goto l26;  if (!yy_b()) goto l26;  yyDo(yy_3_block, yybegin, yyend);  goto l23;
-  l26:;	  yypos= yypos23; yythunkpos= yythunkpos23;  if (!yy_b()) goto l22;  if (!yymatchString("after")) goto l22;  if (!yy_b()) goto l22;
+  l26:;	  yypos= yypos23; yythunkpos= yythunkpos23;  if (!yy_b()) goto l22;  if (!yymatchString("after")) goto l22;  if (!yy_b()) goto l22;  yyDo(yy_4_block, yybegin, yyend);
   }
-  l23:;	  yyDo(yy_4_block, yybegin, yyend);  if (!yy_source()) goto l22;  yyDo(yySet, -1, 0);  yyDo(yy_5_block, yybegin, yyend);  if (!yy_end()) goto l22;
+  l23:;	  if (!yy_source()) goto l22;  yyDo(yySet, -1, 0);  yyDo(yy_5_block, yybegin, yyend);  if (!yy_end()) goto l22;
   yyprintf((stderr, "  ok   %s @ %s\n", "block", yybuf+yypos));  yyDo(yyPop, 1, 0);
   return 1;
   l22:;	  yypos= yypos0; yythunkpos= yythunkpos0;

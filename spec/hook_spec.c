@@ -1,8 +1,8 @@
 
-static int nbefore = 0;
-static int nbefore_each = 0;
-static int nafter = 0;
-static int nafter_each = 0;
+int nbefore = 0;
+int nbefore_each = 0;
+int nafter = 0;
+int nafter_each = 0;
 
 describe 'CSpec'
   before
