@@ -1,0 +1,70 @@
+
+= CSpec
+
+BDD test framework for the C programming language.
+
+* Coming Soon.
+
+== Example
+
+  
+  static int nbefore = 0;
+  static int nbefore_each = 0;
+  static int nafter = 0;
+  static int nafter_each = 0;
+
+  describe 'CSpec'
+    before
+      ++nbefore;
+    end
+
+    after
+      ++nafter;
+    end
+
+    describe 'before'
+      it 'should be called before each suite'
+        expect(nbefore == 1);
+      end
+
+      it 'should not be called before each spec'
+        expect(nbefore == 1);
+      end
+    end
+
+    describe 'after'
+      it 'be called after each suite'
+        expect(nafter == 1);
+      end 
+
+      it 'should not be called after each spec'
+        expect(nafter == 1);
+      end
+    end
+  end
+
+== License 
+
+(The MIT License)
+
+Copyright (c) 2008 - 2009 TJ Holowaychuk <tj@vision-media.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
