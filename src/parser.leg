@@ -3,6 +3,9 @@
   #include "cspec.h"
 
   #define YYSTYPE char *
+  
+  #define LPAREN '{'
+  #define RPAREN '}'
 
   #define DUP yy = strdup(yytext)
   
@@ -35,32 +38,31 @@
 
   main         = < (!'describe' .)+ >                     { OUT }
                | suite
+               | spec
+               | block
+               | end                                      { printf("\n%c\n", RPAREN) }
+               | < . >                                    { printf("%s", yytext) }
             
   suite        = 'describe' s a:string                    { SUITE(a) } 
-               (ws | spec | block | suite)*
-               end
 
-  spec         = 'it' s a:string 
-               b:source
-               end                                        { CODE(b); SPEC(a) }
+  spec         = 'it' s a:string                          { SPEC(a) }
                
   block        = 
-               ( b 'before each' b                        { BLOCK("BeforeEach", NULL) }
-               | b 'before' b                             { BLOCK("Before", NULL) }
-               | b 'after each' b                         { BLOCK("AfterEach", NULL) }
-               | b 'after' b                              { BLOCK("After", NULL) }
+               ( ws 'before each' ws                      { BLOCK("BeforeEach", NULL) }
+               | ws 'before' ws                           { BLOCK("Before", NULL) }
+               | ws 'after each' ws                       { BLOCK("AfterEach", NULL) }
+               | ws 'after' ws                            { BLOCK("After", NULL) }
                )                            
                a:source                                   { CODE(a) }
                end
                
-  source       = < (!end .)+ > end                        { DUP }
+  source       = < (!end .)+ >                            { DUP }
                
   string       = < '\'' (!'\'' .)* '\'' >                 { DUP }
                | < '"' (!'"' .)* '"' >                    { DUP }
 
-  ws           = [ \t] | nl
-  end          = b 'end' b                                    
-  b            = [ \t] | nl
+  ws           = ' ' | '\t' | nl
+  end          = ws 'end' ws                                    
   EOL          = nl | EOF                                
   EOF          = !.                                      
   nl           = '\n' | '\r\n' | '\r'                    
