@@ -42,10 +42,10 @@
 
   spec         = 'it' s a:string b:source end             { CODE(b); SPEC(a) }
                
-  block        = b 'before' b                             { BLOCK("Before", NULL) }
-               | b 'before each' b                        { BLOCK("BeforeEach", NULL) }
-               | b 'after' b                              { BLOCK("After", NULL) }
+  block        = b 'before each' b                        { BLOCK("BeforeEach", NULL) }
+               | b 'before' b                             { BLOCK("Before", NULL) }
                | b 'after each' b                         { BLOCK("AfterEach", NULL) }
+               | b 'after' b                              { BLOCK("After", NULL) }
                
   source       = < (!end .)+ > end                        { DUP }
                
