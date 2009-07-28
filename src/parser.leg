@@ -40,12 +40,16 @@
                (ws | spec | block | suite)*
                end
 
-  spec         = 'it' s a:string b:source end             { CODE(b); SPEC(a) }
+  spec         = 'it' s a:string 
+               b:source
+               end                                        { CODE(b); SPEC(a) }
                
-  block        = b 'before each' b                        { BLOCK("BeforeEach", NULL) }
+  block        = ( b 'before each' b                      { BLOCK("BeforeEach", NULL) }
                | b 'before' b                             { BLOCK("Before", NULL) }
                | b 'after each' b                         { BLOCK("AfterEach", NULL) }
-               | b 'after' b                              { BLOCK("After", NULL) }
+               | b 'after' b )                            { BLOCK("After", NULL) }
+               a:source                                   { CODE(a) }
+               end
                
   source       = < (!end .)+ > end                        { DUP }
                
