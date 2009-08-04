@@ -26,7 +26,9 @@
     }
     
   #define SUITE(S) \
-    DEFER("Suite *suite_%d = Suite_new(%s);\n", nsuites++, S);
+    last_suite = nsuites - 1; current_suite = nsuites; \
+    DEFER("Suite *suite_%d = Suite_new(%s);\n", nsuites++, S); \
+    if (last_suite > -1) DEFER("Suite_push_suite(suite_%d, suite_%d);\n", last_suite, current_suite);
     
   #define SPEC(S) BLOCK("Spec", S);
         
@@ -59,6 +61,8 @@
   
   static int nsuites = 0;
   static int nblocks = 0;
+  static int last_suite = 0;
+  static int current_suite = 0;
   static nodeType current = nodeTypeNone;
   static char buf[1024];
   static char defer[1024];

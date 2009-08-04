@@ -16,7 +16,12 @@ build:
 parser:
 	$(LEG) src/parser.leg > src/parser.c
 	
-test: all
-	./bin/cspec < spec/hook_spec.c  > spec/hook.c
+build_tests:
 	$(CC) ./build/cspec.o spec/hook.c -std=c99 -I src -o ./bin/test
+		
+parse_tests:
+	./bin/cspec < spec/hook_spec.c > spec/hook.c
+		
+test: all parse_tests build_tests
 	./bin/test
+	
