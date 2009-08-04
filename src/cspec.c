@@ -33,7 +33,8 @@ Suite_new(char *description) {
 void
 Suite_run(Suite *self) {
   current_suite = self;
-  printf("\n\033[1;01m  %s\033[0m", self->description);
+  if (Suite_spec_length(self))
+    printf("\n\033[1;01m  %s\033[0m", self->description);
   Suite_run_blocks(self, blockTypeBefore);
   for (int i = 0; i < self->nblocks; ++i) 
     if (self->blocks[i]->type == blockTypeSpec)
