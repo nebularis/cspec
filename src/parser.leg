@@ -9,7 +9,7 @@
 
   #define DUP yy = strdup(yytext)
   
-  #define OUT printf("%s", yytext)
+  #define LITERAL printf("%s", yytext)
   
   #define YY_INPUT(buf, result, max_size) { \
       int yyc = getc(stdin); \
@@ -28,28 +28,49 @@
     printf("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
     printf("void block_%d_callback() %c\n", nblocks, LPAREN); \
     nblocks++;
+    
+  #define NODE(T) \
+    current = nodeType##T;
+    
+  #define NODE2(T, S) \
+    NODE(T); \
+    buf = S;
+    
+  #define OUT \
+    printf("\n%s\n", RPAREN);
+  
+  typedef enum {
+    nodeTypeNone = -1,
+    nodeTypeBeforeEach,
+    nodeTypeAfterEach,
+    nodeTypeBefore,
+    nodeTypeAfter,
+    nodeTypeSuite,
+    nodeTypeSpec
+  } nodeType;
   
   static int nsuites = 0;
   static int nblocks = 0;
-    
+  static nodeType current = nodeTypeNone;
+  static char *buf;
 %}
 
-  main         = < (!'describe' .)+ >                     { OUT }
+  main         = < (!'describe' .)+ >                     { LITERAL }
                ( suite
                | spec
                | block
-               | end                                      { printf("\n%c\n", RPAREN) }
-               | < . >                                    { printf("%s", yytext) }
+               | end                                      { OUT }
+               | < . >                                    { LITERAL }
                )*
             
-  suite        = 'describe' s a:string                    { SUITE(a) } 
+  suite        = 'describe' s a:string                    { NODE2(Suite, a) } 
 
-  spec         = 'it' s a:string                          { SPEC(a) }
+  spec         = 'it' s a:string                          { NODE2(Spec, a) }
                
-  block        = ( ws 'before each' ws                    { BLOCK("BeforeEach", NULL) }
-               | ws 'before' ws                           { BLOCK("Before", NULL) }
-               | ws 'after each' ws                       { BLOCK("AfterEach", NULL) }
-               | ws 'after' ws                            { BLOCK("After", NULL) }
+  block        = ( ws 'before each' ws                    { NODE(BeforeEach) }
+               | ws 'before' ws                           { NODE(Before) }
+               | ws 'after each' ws                       { NODE(AfterEach) }
+               | ws 'after' ws                            { NODE(After) }
                )                            
                
   string       = < '"' (!'"' .)* '"' >                    { DUP }

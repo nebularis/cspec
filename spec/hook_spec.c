@@ -23,7 +23,7 @@ describe "CSpec"
     end
   end
   
-  describe 'after'
+  describe "after"
     it "be called after each suite"
       expect(nafter == 1);
     end 

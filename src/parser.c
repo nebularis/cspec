@@ -14,7 +14,7 @@
 
   #define DUP yy = strdup(yytext)
   
-  #define OUT printf("%s", yytext)
+  #define LITERAL printf("%s", yytext)
   
   #define YY_INPUT(buf, result, max_size) { \
       int yyc = getc(stdin); \
@@ -33,10 +33,31 @@
     printf("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
     printf("void block_%d_callback() %c\n", nblocks, LPAREN); \
     nblocks++;
+    
+  #define NODE(T) \
+    current = nodeType##T;
+    
+  #define NODE2(T, S) \
+    NODE(T); \
+    buf = S;
+    
+  #define OUT \
+    printf("\n%s\n", RPAREN);
+  
+  typedef enum {
+    nodeTypeNone = -1,
+    nodeTypeBeforeEach,
+    nodeTypeAfterEach,
+    nodeTypeBefore,
+    nodeTypeAfter,
+    nodeTypeSuite,
+    nodeTypeSpec
+  } nodeType;
   
   static int nsuites = 0;
   static int nblocks = 0;
-    
+  static nodeType current = nodeTypeNone;
+  static char *buf;
 
 #ifndef YY_VARIABLE
 #define YY_VARIABLE(T)	static T
@@ -269,51 +290,51 @@ YY_ACTION(void) yy_1_string(char *yytext, int yyleng)
 YY_ACTION(void) yy_4_block(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_4_block\n"));
-   BLOCK("After", NULL) ;
+   NODE(After) ;
 }
 YY_ACTION(void) yy_3_block(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_3_block\n"));
-   BLOCK("AfterEach", NULL) ;
+   NODE(AfterEach) ;
 }
 YY_ACTION(void) yy_2_block(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_2_block\n"));
-   BLOCK("Before", NULL) ;
+   NODE(Before) ;
 }
 YY_ACTION(void) yy_1_block(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_1_block\n"));
-   BLOCK("BeforeEach", NULL) ;
+   NODE(BeforeEach) ;
 }
 YY_ACTION(void) yy_1_spec(char *yytext, int yyleng)
 {
 #define a yyval[-1]
   yyprintf((stderr, "do yy_1_spec\n"));
-   SPEC(a) ;
+   NODE2(Spec, a) ;
 #undef a
 }
 YY_ACTION(void) yy_1_suite(char *yytext, int yyleng)
 {
 #define a yyval[-1]
   yyprintf((stderr, "do yy_1_suite\n"));
-   SUITE(a) ;
+   NODE2(Suite, a) ;
 #undef a
 }
 YY_ACTION(void) yy_3_main(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_3_main\n"));
-   printf("%s", yytext) ;
+   LITERAL ;
 }
 YY_ACTION(void) yy_2_main(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_2_main\n"));
-   printf("\n%c\n", RPAREN) ;
+   OUT ;
 }
 YY_ACTION(void) yy_1_main(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_1_main\n"));
-   OUT ;
+   LITERAL ;
 }
 
 YY_RULE(int) yy__()
