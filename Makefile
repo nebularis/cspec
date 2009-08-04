@@ -15,4 +15,6 @@ parser:
 	$(LEG) src/parser.leg > src/parser.c
 	
 test: all
-	./build/cspec < spec/hook_spec.c
+	./build/cspec < spec/hook_spec.c  > spec/hook.c
+	$(CC) spec/hook.c -I src -o ./build/test
+	./build/test

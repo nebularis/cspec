@@ -19,7 +19,9 @@
   #define NODE(T) current = nodeType##T, buf = NULL;
     
   #define NODE2(T, S) current = nodeType##T, buf = S;
-    
+  
+  #define END printf("\n%c\n", RPAREN);  
+  
   #define YY_INPUT(buf, result, max_size) { \
       int yyc = getc(stdin); \
       result = (EOF == yyc) ? 0 : (*(buf) = yyc, 1); \
@@ -35,29 +37,28 @@
         
   #define BLOCK(S, D) \
     printf("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
+    printf("Suite_push_block(suite_%d, block_%d);\n", nsuites-1, nblocks); \
     nblocks++;
     
   #define BLOCK_CALLBACK \
     printf("void block_%d_callback() %c\n", nblocks, LPAREN);
     
   #define OUT \
-    printf("\n%c\n", RPAREN); \
     switch (current) { \
-      case nodeTypeBefore    : BLOCK("Before", buf); break; \
-      case nodeTypeBeforeEach: BLOCK("BeforeEach", buf); break; \
-      case nodeTypeAfter     : BLOCK("After", buf); break; \
-      case nodeTypeAfterEach : BLOCK("AfterEach", buf); break; \
-      case nodeTypeSpec      : SPEC(buf); break; \
-      case nodeTypeSuite     : SUITE(buf); break; \
-    }
+      case nodeTypeBefore    : END; BLOCK("Before", buf); break; \
+      case nodeTypeBeforeEach: END; BLOCK("BeforeEach", buf); break; \
+      case nodeTypeAfter     : END; BLOCK("After", buf); break; \
+      case nodeTypeAfterEach : END; BLOCK("AfterEach", buf); break; \
+      case nodeTypeSpec      : END; SPEC(buf); break; \
+    } \
+    current = nodeTypeNone;
   
   typedef enum {
-    nodeTypeNone = -1,
+    nodeTypeNone,
     nodeTypeBeforeEach,
     nodeTypeAfterEach,
     nodeTypeBefore,
     nodeTypeAfter,
-    nodeTypeSuite,
     nodeTypeSpec
   } nodeType;
   
@@ -330,7 +331,7 @@ YY_ACTION(void) yy_1_suite(char *yytext, int yyleng)
 {
 #define a yyval[-1]
   yyprintf((stderr, "do yy_1_suite\n"));
-   NODE2(Suite, a) ;
+   SUITE(a) ;
 #undef a
 }
 YY_ACTION(void) yy_3_main(char *yytext, int yyleng)
@@ -574,8 +575,6 @@ YY_PARSE(int) YYPARSE(void)
 
 
 int main() {
-  printf("void test() {\n");
   while (YYPARSE()) ;
-  printf("\n}\n");
   return 0;
 }
