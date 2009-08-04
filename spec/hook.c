@@ -44,6 +44,7 @@ static int nafter_each = 0;
    
 }
  int main() {
+
 Suite *suite_0 = Suite_new("CSpec");
 
 Suite *suite_0 = Suite_new("CSpec");
@@ -80,7 +81,8 @@ Block *block_5 = Block_new(blockTypeSpec, "should not be called after each spec"
 
 Suite_push_block(suite_2, block_5);
 
-
 Suite_run(suite_0);
 return 0;
 }
+
+

@@ -581,11 +581,11 @@ YY_PARSE(int) YYPARSE(void)
 
 
 int main() {
+  DEFER("int main() %c\n", LPAREN)
   while (YYPARSE()) ;
-  printf("int main() %c\n", LPAREN);
-  puts(defer);
-  printf("Suite_run(suite_0);\n"
+  DEFER("Suite_run(suite_0);\n"
        "return 0;"
        "\n%c\n", RPAREN);
+  puts(defer);
   return 0;
 }
