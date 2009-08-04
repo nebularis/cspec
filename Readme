@@ -7,8 +7,7 @@ BDD test framework for the C programming language.
 
 == TODO:
 
-* Fix whitespace in output 
-* refactor makefile 
+* nest hooks in CSpec hooks foo 
 * make install 
 * prefix suite descriptions ... dont display unless it
   has specs. 
