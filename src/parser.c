@@ -16,11 +16,13 @@
   
   #define LITERAL printf("%s", yytext)
   
-  #define NODE(T) current = nodeType##T, buf = NULL;
+  #define NODE(T) current = nodeType##T, buf2 = NULL;
     
-  #define NODE2(T, S) current = nodeType##T, buf = S;
+  #define NODE2(T, S) current = nodeType##T, buf2 = S;
   
   #define END printf("\n%c\n", RPAREN);  
+  
+  #define DEFER(S, ...) sprintf(buf, S "\n", __VA_ARGS__); strcat(defer, buf);
   
   #define YY_INPUT(buf, result, max_size) { \
       int yyc = getc(stdin); \
@@ -29,13 +31,13 @@
     }
     
   #define SUITE(S) \
-    printf("Suite *suite_%d = Suite_new(%s);\n", nsuites++, S);
+    DEFER("Suite *suite_%d = Suite_new(%s);\n", nsuites++, S);
     
   #define SPEC(S) BLOCK("Spec", S);
         
   #define BLOCK(S, D) \
-    printf("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
-    printf("Suite_push_block(suite_%d, block_%d);\n", nsuites-1, nblocks); \
+    DEFER("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
+    DEFER("Suite_push_block(suite_%d, block_%d);\n", nsuites-1, nblocks); \
     nblocks++;
     
   #define BLOCK_CALLBACK \
@@ -43,11 +45,11 @@
     
   #define OUT \
     switch (current) { \
-      case nodeTypeBefore    : END; BLOCK("Before", buf); break; \
-      case nodeTypeBeforeEach: END; BLOCK("BeforeEach", buf); break; \
-      case nodeTypeAfter     : END; BLOCK("After", buf); break; \
-      case nodeTypeAfterEach : END; BLOCK("AfterEach", buf); break; \
-      case nodeTypeSpec      : END; SPEC(buf); break; \
+      case nodeTypeBefore    : END; BLOCK("Before",     buf2); break; \
+      case nodeTypeBeforeEach: END; BLOCK("BeforeEach", buf2); break; \
+      case nodeTypeAfter     : END; BLOCK("After",      buf2); break; \
+      case nodeTypeAfterEach : END; BLOCK("AfterEach",  buf2); break; \
+      case nodeTypeSpec      : END; SPEC(buf2);                break; \
     } \
     current = nodeTypeNone;
   
@@ -63,7 +65,9 @@
   static int nsuites = 0;
   static int nblocks = 0;
   static nodeType current = nodeTypeNone;
-  static char *buf = NULL;
+  static char buf[1024];
+  static char defer[1024];
+  static char *buf2;
 
 #ifndef YY_VARIABLE
 #define YY_VARIABLE(T)	static T
@@ -574,5 +578,10 @@ YY_PARSE(int) YYPARSE(void)
 
 int main() {
   while (YYPARSE()) ;
+  printf("int main() %c\n", LPAREN);
+  puts(defer);
+  printf("Suite_run(suite_0);\n"
+       "return 0;"
+       "\n%c\n", RPAREN);
   return 0;
 }
