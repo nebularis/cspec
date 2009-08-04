@@ -27,6 +27,7 @@ Suite_new(char *description) {
   self->suites = NULL;
   self->nblocks = 0;
   self->nsuites = 0;
+  self->parent = NULL;
   return self;
 }
 
@@ -34,15 +35,15 @@ void
 Suite_run(Suite *self) {
   current_suite = self;
   if (Suite_spec_length(self))
-    printf("\n\033[1;01m  %s\033[0m", self->description);
+    printf("\n\033[1;01m  %s\033[0m", Suite_description(self));
   Suite_run_blocks(self, blockTypeBefore);
   for (int i = 0; i < self->nblocks; ++i) 
     if (self->blocks[i]->type == blockTypeSpec)
       Suite_run_spec(self, self->blocks[i]);
+  printf("\n");
   for (int i = 0; i < self->nsuites; ++i)
     Suite_run(self->suites[i]);
   Suite_run_blocks(self, blockTypeAfter);
-  printf("\n\n");
 }
 
 void
@@ -63,6 +64,16 @@ Suite_spec_length(Suite *self) {
   return len;
 }
 
+char *
+Suite_description(Suite *self) {
+  if (self->parent) {
+    char *str = (char *) malloc(strlen(self->parent->description) + strlen(self->description) + 1);
+    sprintf(str, "%s %s", self->parent->description, self->description);
+    return str;
+  }
+  return NULL;
+}
+
 void
 Suite_run_blocks(Suite *self, blockType type) {
   for (int i = 0; i < self->nblocks; ++i)
@@ -81,4 +92,5 @@ void
 Suite_push_suite(Suite *self, Suite *suite) {
   REALLOC(suites, Suite *);
   self->suites[self->nsuites-1] = suite;
+  suite->parent = self;
 }

@@ -46,6 +46,7 @@ typedef struct _Suite {
   int nsuites;
   Block **blocks;
   struct _Suite **suites;
+  struct _Suite *parent;
 } Suite;
 
 Block *
@@ -71,5 +72,8 @@ Suite_push_suite(Suite *self, Suite *suite);
 
 int
 Suite_spec_length(Suite *self);
+
+char *
+Suite_description(Suite *self);
 
 #endif
