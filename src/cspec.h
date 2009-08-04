@@ -69,4 +69,7 @@ Suite_push_block(Suite *self, Block *block);
 void
 Suite_push_suite(Suite *self, Suite *suite);
 
+int
+Suite_spec_length(Suite *self);
+
 #endif

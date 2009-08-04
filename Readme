@@ -10,6 +10,8 @@ BDD test framework for the C programming language.
 * Fix whitespace in output 
 * refactor makefile 
 * make install 
+* prefix suite descriptions ... dont display unless it
+  has specs. 
 
 == Example
 

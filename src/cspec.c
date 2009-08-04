@@ -53,6 +53,15 @@ Suite_run_spec(Suite *self, Block *spec) {
   Suite_run_blocks(self, blockTypeAfterEach);
 }
 
+int
+Suite_spec_length(Suite *self) {
+  int len = 0;
+  for (int i = 0; i < self->nblocks; ++i) 
+    if (self->blocks[i]->type == blockTypeSpec)
+      ++len;
+  return len;
+}
+
 void
 Suite_run_blocks(Suite *self, blockType type) {
   for (int i = 0; i < self->nblocks; ++i)
