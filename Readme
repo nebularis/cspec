@@ -11,6 +11,7 @@ BDD test framework for the C programming language.
 * Fix whitespace in output 
 * refactor makefile 
 * make install 
+* dynamic strings or large buffer macros 
 
 == Example
 

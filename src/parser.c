@@ -69,8 +69,8 @@
   static int last_suite = 0;
   static int current_suite = 0;
   static nodeType current = nodeTypeNone;
-  static char buf[1024];
-  static char defer[1024];
+  static char buf[CSPEC_BUFFER_SIZE];
+  static char defer[CSPEC_BUFFER_SIZE];
   static char *buf2;
 
 #ifndef YY_VARIABLE
@@ -468,9 +468,9 @@ YY_RULE(int) yy_end()
 YY_RULE(int) yy_block()
 {  int yypos0= yypos, yythunkpos0= yythunkpos;
   yyprintf((stderr, "%s\n", "block"));
-  {  int yypos30= yypos, yythunkpos30= yythunkpos;  if (!yy_ws()) goto l31;  if (!yymatchString("before each")) goto l31;  if (!yy_ws()) goto l31;  yyDo(yy_1_block, yybegin, yyend);  goto l30;
+  {  int yypos30= yypos, yythunkpos30= yythunkpos;  if (!yy_ws()) goto l31;  if (!yymatchString("before_each")) goto l31;  if (!yy_ws()) goto l31;  yyDo(yy_1_block, yybegin, yyend);  goto l30;
   l31:;	  yypos= yypos30; yythunkpos= yythunkpos30;  if (!yy_ws()) goto l32;  if (!yymatchString("before")) goto l32;  if (!yy_ws()) goto l32;  yyDo(yy_2_block, yybegin, yyend);  goto l30;
-  l32:;	  yypos= yypos30; yythunkpos= yythunkpos30;  if (!yy_ws()) goto l33;  if (!yymatchString("after each")) goto l33;  if (!yy_ws()) goto l33;  yyDo(yy_3_block, yybegin, yyend);  goto l30;
+  l32:;	  yypos= yypos30; yythunkpos= yythunkpos30;  if (!yy_ws()) goto l33;  if (!yymatchString("after_each")) goto l33;  if (!yy_ws()) goto l33;  yyDo(yy_3_block, yybegin, yyend);  goto l30;
   l33:;	  yypos= yypos30; yythunkpos= yythunkpos30;  if (!yy_ws()) goto l29;  if (!yymatchString("after")) goto l29;  if (!yy_ws()) goto l29;  yyDo(yy_4_block, yybegin, yyend);
   }
   l30:;	  yyDo(yy_5_block, yybegin, yyend);

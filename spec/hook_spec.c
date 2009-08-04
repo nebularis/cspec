@@ -26,7 +26,7 @@ describe "CSpec"
   end
   
   describe "after"
-    it "be called after each suite"
+    it "should be called after each suite"
       expect(nafter == 1);
     end 
     
@@ -34,4 +34,25 @@ describe "CSpec"
       expect(nafter == 1);
     end
   end
+  
+  describe "before_each"
+    before_each
+      ++nbefore_each;
+    end
+    
+    after_each
+      ++nafter_each;
+    end
+    
+    it "should be called before / after each spec"
+      expect(nbefore_each == 1);
+      expect(nafter_each == 0);
+    end
+    
+    it "should be called before / after each spec"
+      expect(nbefore_each == 2);
+      expect(nafter_each == 1);
+    end
+  end
+  
 end

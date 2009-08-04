@@ -17,7 +17,7 @@
 #define MALLOC(T) (T *) malloc(sizeof(T))
 #define REALLOC(F, T) self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T))
 #define INIT(T) T *self = MALLOC(T)
-#define CSPEC_MAX_BLOCKS 1024
+#define CSPEC_BUFFER_SIZE 5000
 
 typedef void (*callback)();
 
