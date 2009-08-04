@@ -58,7 +58,7 @@ Suite_push_block(suite_0, block_1);
 
 Suite *suite_1 = Suite_new("before");
 
-   Suite_push_suite(suite_0, suite_1);
+Suite_push_suite(suite_0, suite_1);
 
 Block *block_2 = Block_new(blockTypeSpec, "should be called before each suite", &block_2_callback);
 
@@ -70,7 +70,7 @@ Suite_push_block(suite_1, block_3);
 
 Suite *suite_2 = Suite_new("after");
 
-   Suite_push_suite(suite_1, suite_2);
+Suite_push_suite(suite_1, suite_2);
 
 Block *block_4 = Block_new(blockTypeSpec, "be called after each suite", &block_4_callback);
 

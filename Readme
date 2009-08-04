@@ -5,6 +5,13 @@ BDD test framework for the C programming language.
 
 * Coming Soon.
 
+== TODO:
+
+* Remove duplicate
+* Fix whitespace in output 
+* refactor makefile 
+* make install 
+
 == Example
 
   

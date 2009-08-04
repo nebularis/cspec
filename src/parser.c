@@ -33,7 +33,7 @@
   #define SUITE(S) \
     last_suite = nsuites - 1; current_suite = nsuites; \
     DEFER("Suite *suite_%d = Suite_new(%s);\n", nsuites++, S); \
-    if (last_suite > -1) DEFER("   Suite_push_suite(suite_%d, suite_%d);\n", last_suite, current_suite);
+    if (last_suite > -1) DEFER("Suite_push_suite(suite_%d, suite_%d);\n", last_suite, current_suite);
     
   #define SPEC(S) BLOCK("Spec", S);
         
