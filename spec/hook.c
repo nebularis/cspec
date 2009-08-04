@@ -72,8 +72,7 @@ static int nafter_each = 0;
 
 Suite *suite_0 = Suite_new("CSpec");
 
-Suite *suite_0 = Suite_new("CSpec");
-
+ 
 Block *block_0 = Block_new(blockTypeBefore, NULL, &block_0_callback);
 
 Suite_push_block(suite_0, block_0);
