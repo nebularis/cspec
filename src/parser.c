@@ -588,6 +588,7 @@ int main() {
   DEFER("int main() %c\n", LPAREN)
   while (YYPARSE()) ;
   DEFER("Suite_run(suite_0);\n"
+       "printf(\"\\n\");\n"
        "return 0;"
        "\n%c\n", RPAREN);
   puts(defer);

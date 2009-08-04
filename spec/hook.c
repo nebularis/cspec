@@ -126,6 +126,7 @@ Block *block_9 = Block_new(blockTypeSpec, "should be called before / after each 
 Suite_push_block(suite_3, block_9);
 
 Suite_run(suite_0);
+printf("\n");
 return 0;
 }
 
