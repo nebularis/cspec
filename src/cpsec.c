@@ -10,10 +10,6 @@
 Suite *current_suite = NULL;
 Block *current_spec = NULL;
 
-#define expect(E) \
-  if (E) printf("\033[1;32m%c\033[0m", '.'); \
-  else printf("\n\033[0;31m      failed:\n        %s\033[0m\n", #E);
-
 Block *
 Block_new(blockType type, char *description, callback func) {
   INIT(Block);
