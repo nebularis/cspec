@@ -11,6 +11,10 @@
   
   #define LITERAL printf("%s", yytext)
   
+  #define NODE(T) current = nodeType##T, buf = NULL;
+    
+  #define NODE2(T, S) current = nodeType##T, buf = S;
+    
   #define YY_INPUT(buf, result, max_size) { \
       int yyc = getc(stdin); \
       result = (EOF == yyc) ? 0 : (*(buf) = yyc, 1); \
@@ -26,18 +30,21 @@
         
   #define BLOCK(S, D) \
     printf("Block *block_%d = Block_new(blockType%s, %s, &block_%d_callback);\n", nblocks, S, D == NULL ? "NULL" : D, nblocks); \
-    printf("void block_%d_callback() %c\n", nblocks, LPAREN); \
     nblocks++;
     
-  #define NODE(T) \
-    current = nodeType##T;
-    
-  #define NODE2(T, S) \
-    NODE(T); \
-    buf = S;
+  #define BLOCK_CALLBACK \
+    printf("void block_%d_callback() %c\n", nblocks, LPAREN);
     
   #define OUT \
-    printf("\n%s\n", RPAREN);
+    printf("\n%c\n", RPAREN); \
+    switch (current) { \
+      case nodeTypeBefore    : BLOCK("Before", buf); break; \
+      case nodeTypeBeforeEach: BLOCK("BeforeEach", buf); break; \
+      case nodeTypeAfter     : BLOCK("After", buf); break; \
+      case nodeTypeAfterEach : BLOCK("AfterEach", buf); break; \
+      case nodeTypeSpec      : SPEC(buf); break; \
+      case nodeTypeSuite     : SUITE(buf); break; \
+    }
   
   typedef enum {
     nodeTypeNone = -1,
@@ -52,7 +59,7 @@
   static int nsuites = 0;
   static int nblocks = 0;
   static nodeType current = nodeTypeNone;
-  static char *buf;
+  static char *buf = NULL;
 %}
 
   main         = < (!'describe' .)+ >                     { LITERAL }
@@ -65,18 +72,18 @@
             
   suite        = 'describe' s a:string                    { NODE2(Suite, a) } 
 
-  spec         = 'it' s a:string                          { NODE2(Spec, a) }
+  spec         = 'it' s a:string                          { NODE2(Spec, a); BLOCK_CALLBACK }
                
   block        = ( ws 'before each' ws                    { NODE(BeforeEach) }
                | ws 'before' ws                           { NODE(Before) }
                | ws 'after each' ws                       { NODE(AfterEach) }
                | ws 'after' ws                            { NODE(After) }
-               )                            
+               )                                          { BLOCK_CALLBACK }
                
   string       = < '"' (!'"' .)* '"' >                    { DUP }
 
   ws           = ' ' | '\t' | nl
-  end          = ws 'end' ws                                    
+  end          = ws? 'end' ws?                                 
   EOL          = nl | EOF                                
   EOF          = !.                                      
   nl           = '\n' | '\r\n' | '\r'                    
