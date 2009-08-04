@@ -52,8 +52,7 @@
                | ws 'after' ws                            { BLOCK("After", NULL) }
                )                            
                
-  string       = < '\'' (!'\'' .)* '\'' >                 { DUP }
-               | < '"' (!'"' .)* '"' >                    { DUP }
+  string       = < '"' (!'"' .)* '"' >                    { DUP }
 
   ws           = ' ' | '\t' | nl
   end          = ws 'end' ws                                    
@@ -64,6 +63,7 @@
   -            = [ \t]*                                  
                                                          
 %%
+
 
 int main() {
   printf("void test() {\n");

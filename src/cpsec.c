@@ -44,6 +44,8 @@ Suite_run(Suite *self) {
   for (int i = 0; i < self->nblocks; ++i) 
     if (self->blocks[i]->type == blockTypeSpec)
       Suite_run_spec(self, self->blocks[i]);
+  for (int i = 0; i < self->nsuites; ++i)
+    Suite_run(self->suites[i]);
   Suite_run_blocks(self, blockTypeAfter);
   printf("\n\n");
 }
