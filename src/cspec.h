@@ -25,7 +25,7 @@ typedef void (*callback)();
   if (E) printf("\033[1;32m%c\033[0m", '.'); \
   else printf("\n\033[0;31m      failed:\n        %s\033[0m", #E);
   
-#define expect_equal(E) expect(E)
+#define match_equal(A, E) A == E
 
 typedef enum {
   blockTypeNotImplemented = 1,

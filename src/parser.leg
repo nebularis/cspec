@@ -45,7 +45,8 @@
     printf("void block_%d_callback() %c\n", nblocks, LPAREN);
     
   #define ASSERTION(V, M, C, N) \
-    printf(N ? "expect_%s(!(%s == %s));\n" : "expect_%s((%s == %s));\n", M, V, C);
+    printf(N ? "expect(!(match_%s(%s, %s)));\n" : \
+               "expect((match_%s(%s, %s)));\n", M, V, C);
     
   #define OUT \
     switch (current) { \

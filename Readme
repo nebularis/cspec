@@ -8,6 +8,7 @@ BDD test framework for the C programming language.
 == TODO:
 
 * fix nesting
+* failure messages
 * more matchers
 * make install 
 * prefix suite descriptions ... dont display unless it
