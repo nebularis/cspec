@@ -12,7 +12,7 @@ Block *current_spec = NULL;
 
 Block *
 Block_new(blockType type, char *description, callback func) {
-  INIT(Block);
+  CSPEC_INIT(Block);
   self->type = type;
   self->description = description;
   self->func = func;
@@ -21,7 +21,7 @@ Block_new(blockType type, char *description, callback func) {
 
 Suite *
 Suite_new(char *description) {
-  INIT(Suite);
+  CSPEC_INIT(Suite);
   self->description = description;
   self->blocks = NULL;
   self->suites = NULL;
@@ -79,13 +79,13 @@ Suite_run_blocks(Suite *self, blockType type) {
 
 void
 Suite_push_block(Suite *self, Block *block) {
-  REALLOC(blocks, Block *);
+  CSPEC_REALLOC(blocks, Block *);
   self->blocks[self->nblocks-1] = block;
 }
 
 void
 Suite_push_suite(Suite *self, Suite *suite) {
-  REALLOC(suites, Suite *);
+  CSPEC_REALLOC(suites, Suite *);
   self->suites[self->nsuites-1] = suite;
   suite->parent = self;
 }

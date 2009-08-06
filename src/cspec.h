@@ -17,10 +17,10 @@
 #define CSPEC_BUFFER_SIZE 5000
 #endif
 
-#define ERROR(S, ...) fprintf(stderr, S "\n", __VA_ARGS__), exit(1)
-#define MALLOC(T) (T *) malloc(sizeof(T))
-#define REALLOC(F, T) self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T))
-#define INIT(T) T *self = MALLOC(T)
+#define CSPEC_ERROR(S, ...) fprintf(stderr, S "\n", __VA_ARGS__), exit(1)
+#define CSPEC_MALLOC(T) (T *) malloc(sizeof(T))
+#define CSPEC_REALLOC(F, T) self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T))
+#define CSPEC_INIT(T) T *self = CSPEC_MALLOC(T)
 
 typedef void (*callback)();
 
