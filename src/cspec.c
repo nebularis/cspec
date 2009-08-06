@@ -66,12 +66,7 @@ Suite_spec_length(Suite *self) {
 
 char *
 Suite_description(Suite *self) {
-  if (self->parent) {
-    char *str = (char *) malloc(strlen(self->parent->description) + strlen(self->description) + 1);
-    sprintf(str, "%s %s", self->parent->description, self->description);
-    return str;
-  }
-  return NULL;
+  return self->description;
 }
 
 void
