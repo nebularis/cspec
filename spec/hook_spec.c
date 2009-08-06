@@ -96,4 +96,10 @@ describe "CSpec assertions"
     foo() should equal 4;
     bar(2) should equal 4;
   end
+  
+  it "should work with subscripts"
+    char *foo = "test";
+    foo[0] should equal 't';
+    foo[1] should equal 'e';
+  end
 end
