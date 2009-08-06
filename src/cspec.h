@@ -13,7 +13,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-#define CSPEC_VERSION "0.0.1"
+#define CSPEC_VERSION "0.0.2"
 
 #ifndef CSPEC_BUFFER_SIZE
 #define CSPEC_BUFFER_SIZE 5000
