@@ -8,12 +8,13 @@ BDD test framework for the C programming language.
 == TODO:
 
 * fix nesting
+* stats
 * more matchers
 * make install 
 * prefix suite descriptions ... dont display unless it
   has specs. 
 
-== Example
+== Example CSpec
 
 The following example uses the CSpec grammar, which is compiled to 
 the literal C code below it.
@@ -36,7 +37,7 @@ the literal C code below it.
     end
   end
 
-  ...
+== Literal C
   
   #include "cspec.h"
   
@@ -66,6 +67,28 @@ the literal C code below it.
     return 0;
   }
 
+== Output
+
+Below is example stdout with a failed assertion.
+
+  CSpec before
+    should be called before each suite .
+    should not be called before each spec .
+
+  CSpec after
+    should be called after each suite .
+    should not be called after each spec .
+
+  CSpec before_each
+    should be called before each spec .
+    should be called before each spec .
+      failed:
+        (match_equal(nbefore_each, 1))
+
+  CSpec after_each
+    should be called after each spec .
+    should be called after each spec .
+  
 == License 
 
 (The MIT License)
