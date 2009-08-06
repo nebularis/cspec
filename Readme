@@ -7,48 +7,64 @@ BDD test framework for the C programming language.
 
 == TODO:
 
-* nest hooks in CSpec hooks foo 
+* fix nesting
+* more matchers
 * make install 
 * prefix suite descriptions ... dont display unless it
   has specs. 
 
 == Example
 
-  
-  static int nbefore = 0;
-  static int nbefore_each = 0;
-  static int nafter = 0;
-  static int nafter_each = 0;
+The following example uses the CSpec grammar, which is compiled to 
+the literal C code below it.
 
-  describe 'CSpec'
-    before
-      ++nbefore;
+  #include "cspec.h"
+
+  static int nbefore_each;
+
+  describe "CSpec before_each"
+    before_each
+      ++nbefore_each;
     end
-
-    after
-      ++nafter;
+    
+    it "should be called before each spec"
+      nbefore_each should equal 1
     end
-
-    describe 'before'
-      it 'should be called before each suite'
-        expect(nbefore == 1);
-      end
-
-      it 'should not be called before each spec'
-        expect(nbefore == 1);
-      end
-    end
-
-    describe 'after'
-      it 'be called after each suite'
-        expect(nafter == 1);
-      end 
-
-      it 'should not be called after each spec'
-        expect(nafter == 1);
-      end
+    
+    it "should be called before each spec"
+     nbefore_each should equal 2
     end
   end
+
+  ...
+  
+  #include "cspec.h"
+  
+  static int nbefore_each;
+  
+  void block_0_callback() {
+    ++nbefore_each;
+  }
+  
+  void block_1_callback() {
+    expect_equal(nbefore_each, 1);
+  }
+  
+  void block_2_callback() {
+    expect_equal(nbefore_each, 2);
+  }
+  
+  int main() {
+    Suite *suite_0 = Suite_new("CSpec before_each");
+    Block *block_0 = Block_new(blockTypeBeforeEach, NULL, &block_0_callback);
+    Block *block_1 = Block_new(blockTypeSpec, "should be called before each spec", &block_1_callback);
+    Block *block_2 = Block_new(blockTypeSpec, "should be called before each spec", &block_2_callback);
+    Suite_push_block(suite_0, block_0);
+    Suite_push_block(suite_0, block_1);
+    Suite_push_block(suite_0, block_2);
+    Suite_run(suite_0);
+    return 0;
+  }
 
 == License 
 
