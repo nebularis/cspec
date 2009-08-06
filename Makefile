@@ -7,8 +7,9 @@ all: clean parser build
 clean:
 	rm -fr build
 	rm -fr bin
+	rm src/parser.c
   
-build:
+build: 
 	mkdir build bin
 	$(CC) -c src/cspec.c -std=c99 -o ./build/cspec.o
 	$(CC) src/*.c -std=c99 -o ./bin/cspec
@@ -24,4 +25,7 @@ parse_tests:
 		
 test: all parse_tests build_tests
 	./bin/test
+	
+install: build/cspec
+	cp build/cspec /usr/bin/cspec
 	
