@@ -89,3 +89,9 @@ Suite_push_suite(Suite *self, Suite *suite) {
   self->suites[self->nsuites-1] = suite;
   suite->parent = self;
 }
+
+void
+CSpec_stats() {
+  printf("\n  \033[1;01mPasses:\033[0m \033[1;32m%d\033[0m \033[1;01mFailures:\033[0m \033[1;31m%d\033[0m\n\n", 
+    CSpec.passes, CSpec.failures);
+}

@@ -22,8 +22,8 @@
 typedef void (*callback)();
 
 #define expect(E) \
-  if (E) printf("\033[1;32m%c\033[0m", '.'); \
-  else printf("\n\033[0;31m      failed:\n        %s\033[0m", #E);
+  if (E) printf("\033[1;32m%c\033[0m", '.'), ++CSpec.passes; \
+  else printf("\n\033[0;31m      failed:\n        %s\033[0m", #E), ++CSpec.failures;
   
 #define match_equal(A, E) A == E
 
@@ -35,6 +35,11 @@ typedef enum {
   blockTypeAfter,
   blockTypeAfterEach
 } blockType;
+
+struct {
+  int passes;
+  int failures;
+} CSpec;
 
 typedef struct {
   char *description;
@@ -77,5 +82,8 @@ Suite_spec_length(Suite *self);
 
 char *
 Suite_description(Suite *self);
+
+void
+CSpec_stats();
 
 #endif

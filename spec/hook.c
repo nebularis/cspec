@@ -151,7 +151,7 @@ Block *block_11 = Block_new(blockTypeSpec, "should be called after each spec", &
 Suite_push_block(suite_3, block_11);
 
 Suite_run(suite_0);
-printf("\n");
+CSpec_stats();
 return 0;
 }
 
