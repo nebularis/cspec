@@ -77,32 +77,36 @@
   static char *buf2;
 %}
 
-  main         = < (!'describe' .)+ >                     { LITERAL }
-               ( suite
-               | spec
-               | block
-               | end                                      { OUT }
-               | assertion
-               | < . >                                    { LITERAL }
-               )*
-            
-  suite        = 'describe' s a:string                    { SUITE(a) } 
-
-  spec         = 'it' s a:string                          { NODE2(Spec, a); BLOCK_CALLBACK }
+  main         = < (!'describe' .)+ >                       { LITERAL }
+               ( suite                                      
+               | spec                                       
+               | block                                      
+               | end                                        { OUT }
+               | assertion                                  
+               | < . >                                      { LITERAL }
+               )*                                           
                
-  block        = ( ws 'before_each' ws                    { NODE(BeforeEach) }
-               | ws 'before' ws                           { NODE(Before) }
-               | ws 'after_each' ws                       { NODE(AfterEach) }
-               | ws 'after' ws                            { NODE(After) }
-               )                                          { BLOCK_CALLBACK }
+  expr         = < [a-zA-Z_]+ '.' [a-zA-Z_]+ >              { DUP }
+               | < [a-zA-Z_]+ '->' [a-zA-Z_]+ >             { DUP }
+               | id
+                                                            
+  suite        = 'describe' s a:string                      { SUITE(a) } 
+                                                            
+  spec         = 'it' s a:string                            { NODE2(Spec, a); BLOCK_CALLBACK }
+                                                            
+  block        = ( ws 'before_each' ws                      { NODE(BeforeEach) }
+               | ws 'before' ws                             { NODE(Before) }
+               | ws 'after_each' ws                         { NODE(AfterEach) }
+               | ws 'after' ws                              { NODE(After) }
+               )                                            { BLOCK_CALLBACK }
                
-  assertion    = a:id s 'should' s 'not' s b:id c:consume { ASSERTION(a, b, c, 1) }
-               | a:id s 'should' s b:id c:consume         { ASSERTION(a, b, c, 0) }
+  assertion    = a:expr s 'should' s 'not' s b:id c:consume { ASSERTION(a, b, c, 1) }
+               | a:expr s 'should' s b:id c:consume         { ASSERTION(a, b, c, 0) }
                
-  string       = < '"' (!'"' .)* '"' >                    { DUP }
-
-  consume      = < (!EOL .)+ >                            { DUP }
-  id           = < [a-zA-Z_]+ >                           { DUP }
+  string       = < '"' (!'"' .)* '"' >                      { DUP }
+                                                            
+  consume      = < (!EOL .)+ >                              { DUP }
+  id           = < [a-zA-Z_]+ >                             { DUP }
   ws           = ' ' | '\t' | nl
   end          = ws? 'end' ws?
   EOL          = nl | EOF                                

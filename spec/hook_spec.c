@@ -61,3 +61,26 @@ describe "CSpec after_each"
     nafter_each should equal 1
   end
 end
+
+describe "CSpec assertions"
+  it "should work with ids"
+    int foo = 1;
+    foo should equal 1
+  end
+  
+  it "should work with underscored ids"
+    char *foo_bar = "test";
+    foo_bar should equal "test"
+  end
+  
+  it "should work with structures"
+    struct { int x, y; } point = { 0, 1 };
+    point.x should equal 0
+    point.y should equal 1
+  end
+  
+  it "should work with pointers to structures"
+    Suite *foo = Suite_new("Something");
+    foo->description should equal "Something"
+  end
+end

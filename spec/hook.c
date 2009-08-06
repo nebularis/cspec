@@ -85,6 +85,41 @@ static int nafter_each = 0;
 
  
 }
+
+
+  void block_12_callback() {
+
+    int foo = 1;
+    expect((match_equal(foo,  1)));
+
+ 
+}
+  
+  void block_13_callback() {
+
+    char *foo_bar = "test";
+    expect((match_equal(foo_bar,  "test")));
+
+ 
+}
+  
+  void block_14_callback() {
+
+    struct { int x, y; } point = { 0, 1 };
+    expect((match_equal(point.x,  0)));
+
+    expect((match_equal(point.y,  1)));
+
+ 
+}
+  
+  void block_15_callback() {
+
+    Suite *foo = Suite_new("Something");
+    expect((match_equal(foo->description,  "Something")));
+
+ 
+}
 int main() {
 
 Suite *suite_0 = Suite_new("CSpec before");
@@ -149,6 +184,26 @@ Suite_push_block(suite_3, block_10);
 Block *block_11 = Block_new(blockTypeSpec, "should be called after each spec", &block_11_callback);
 
 Suite_push_block(suite_3, block_11);
+
+Suite *suite_4 = Suite_new("CSpec assertions");
+
+Suite_push_suite(suite_3, suite_4);
+
+Block *block_12 = Block_new(blockTypeSpec, "should work with ids", &block_12_callback);
+
+Suite_push_block(suite_4, block_12);
+
+Block *block_13 = Block_new(blockTypeSpec, "should work with underscored ids", &block_13_callback);
+
+Suite_push_block(suite_4, block_13);
+
+Block *block_14 = Block_new(blockTypeSpec, "should work with structures", &block_14_callback);
+
+Suite_push_block(suite_4, block_14);
+
+Block *block_15 = Block_new(blockTypeSpec, "should work with pointers to structures", &block_15_callback);
+
+Suite_push_block(suite_4, block_15);
 
 Suite_run(suite_0);
 CSpec_stats();
