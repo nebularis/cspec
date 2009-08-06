@@ -24,13 +24,13 @@
 #define CSPEC_REALLOC(F, T) self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T))
 #define CSPEC_INIT(T) T *self = CSPEC_MALLOC(T)
 
-typedef void (*callback)();
-
 #define expect(E) \
   if (E) printf("\033[1;32m%c\033[0m", '.'), ++CSpec.passes; \
   else printf("\n\033[0;31m      failed:\n        %s\033[0m", #E), ++CSpec.failures;
   
 #define match_equal(A, E) A == E
+
+typedef void (*callback)();
 
 typedef enum {
   blockTypeNotImplemented = 1,
