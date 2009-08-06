@@ -44,6 +44,9 @@
   #define BLOCK_CALLBACK \
     printf("void block_%d_callback() %c\n", nblocks, LPAREN);
     
+  #define ASSERTION(V, M, C, N) \
+    printf(N ? "expect_%s(!(%s == %s));\n" : "expect_%s((%s == %s));\n", M, V, C);
+    
   #define OUT \
     switch (current) { \
       case nodeTypeBefore    : END; BLOCK("Before",     buf2); break; \
@@ -78,6 +81,7 @@
                | spec
                | block
                | end                                      { OUT }
+               | assertion
                | < . >                                    { LITERAL }
                )*
             
@@ -91,8 +95,13 @@
                | ws 'after' ws                            { NODE(After) }
                )                                          { BLOCK_CALLBACK }
                
+  assertion    = a:id s 'should' s 'not' s b:id c:consume { ASSERTION(a, b, c, 1) }
+               | a:id s 'should' s b:id c:consume         { ASSERTION(a, b, c, 0) }
+               
   string       = < '"' (!'"' .)* '"' >                    { DUP }
 
+  consume      = < (!EOL .)+ >                            { DUP }
+  id           = < [a-zA-Z_]+ >                           { DUP }
   ws           = ' ' | '\t' | nl
   end          = ws? 'end' ws?
   EOL          = nl | EOF                                

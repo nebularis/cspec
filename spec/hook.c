@@ -19,26 +19,30 @@ static int nafter_each = 0;
   
   void block_2_callback() {
 
-    expect(nbefore == 1);
+    expect_equal((nbefore ==  1));
+
  
 }
   
   void block_3_callback() {
 
-    expect(nbefore == 1);
+    expect_equal((nbefore ==  1));
+
  
 }
 
 
   void block_4_callback() {
 
-    expect(nafter == 1);
+    expect_equal((nafter ==  1));
+
  
 }
   
   void block_5_callback() {
 
-    expect(nafter == 1);
+    expect_equal((nafter ==  1));
+
  
 }
 
@@ -50,13 +54,15 @@ static int nafter_each = 0;
   
   void block_7_callback() {
 
-    expect(nbefore_each == 1);
+    expect_equal((nbefore_each ==  1));
+
  
 }
   
   void block_8_callback() {
 
-    expect(nbefore_each == 2);
+   expect_equal((nbefore_each ==  2));
+
  
 }
 
@@ -68,13 +74,15 @@ static int nafter_each = 0;
   
   void block_10_callback() {
 
-    expect(nafter_each == 0);
+    expect_equal((nafter_each ==  0));
+
  
 }
   
   void block_11_callback() {
 
-    expect(nafter_each == 1);
+    expect_equal((nafter_each ==  1));
+
  
 }
 int main() {
