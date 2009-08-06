@@ -7,8 +7,8 @@
 
 #include "cspec.h"
 
-Suite *current_suite = NULL;
-Block *current_spec = NULL;
+static Suite *current_suite = NULL;
+static Block *current_spec = NULL;
 
 Block *
 Block_new(blockType type, char *description, callback func) {
