@@ -13,11 +13,14 @@
 #include <stdarg.h>
 #include <string.h>
 
+#ifndef CSPEC_BUFFER_SIZE
+#define CSPEC_BUFFER_SIZE 5000
+#endif
+
 #define ERROR(S, ...) fprintf(stderr, S "\n", __VA_ARGS__), exit(1)
 #define MALLOC(T) (T *) malloc(sizeof(T))
 #define REALLOC(F, T) self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T))
 #define INIT(T) T *self = MALLOC(T)
-#define CSPEC_BUFFER_SIZE 5000
 
 typedef void (*callback)();
 
