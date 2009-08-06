@@ -23,14 +23,14 @@ static int bar(n) { return n * n; }
   void block_2_callback() {
 
     expect((match_equal(nbefore,  1)));
-
+;
  
 }
   
   void block_3_callback() {
 
     expect((match_equal(nbefore,  1)));
-
+;
  
 }
 
@@ -38,14 +38,14 @@ static int bar(n) { return n * n; }
   void block_4_callback() {
 
     expect((match_equal(nafter,  1)));
-
+;
  
 }
   
   void block_5_callback() {
 
     expect((match_equal(nafter,  1)));
-
+;
  
 }
 
@@ -58,14 +58,14 @@ static int bar(n) { return n * n; }
   void block_7_callback() {
 
     expect((match_equal(nbefore_each,  1)));
-
+;
  
 }
   
   void block_8_callback() {
 
-   expect((match_equal(nbefore_each,  2)));
-
+    expect((match_equal(nbefore_each,  2)));
+;
  
 }
 
@@ -78,14 +78,14 @@ static int bar(n) { return n * n; }
   void block_10_callback() {
 
     expect((match_equal(nafter_each,  0)));
-
+;
  
 }
   
   void block_11_callback() {
 
     expect((match_equal(nafter_each,  1)));
-
+;
  
 }
 
@@ -100,36 +100,44 @@ static int bar(n) { return n * n; }
   
   void block_13_callback() {
 
-    char *foo_bar = "test";
-    expect((match_equal(foo_bar,  "test")));
-
+    int foo = 1;
+    expect((match_equal(foo,  1)));
+;
  
 }
   
   void block_14_callback() {
 
-    struct { int x, y; } point = { 0, 1 };
-    expect((match_equal(point.x,  0)));
-
-    expect((match_equal(point.y,  1)));
-
+    char *foo_bar = "test";
+    expect((match_equal(foo_bar,  "test")));
+;
  
 }
   
   void block_15_callback() {
 
-    Suite *foo = Suite_new("Something");
-    expect((match_equal(foo->description,  "Something")));
-
+    struct { int x, y; } point = { 0, 1 };
+    expect((match_equal(point.x,  0)));
+;
+    expect((match_equal(point.y,  1)));
+;
  
 }
   
   void block_16_callback() {
 
+    Suite *foo = Suite_new("Something");
+    expect((match_equal(foo->description,  "Something")));
+;
+ 
+}
+  
+  void block_17_callback() {
+
     expect((match_equal(foo(),  4)));
-
+;
     expect((match_equal(bar(2),  4)));
-
+;
  
 }
 int main() {
@@ -201,25 +209,29 @@ Suite *suite_4 = Suite_new("CSpec assertions");
 
 Suite_push_suite(suite_3, suite_4);
 
-Block *block_12 = Block_new(blockTypeSpec, "should work with ids", &block_12_callback);
+Block *block_12 = Block_new(blockTypeSpec, "should work without semicolons", &block_12_callback);
 
 Suite_push_block(suite_4, block_12);
 
-Block *block_13 = Block_new(blockTypeSpec, "should work with underscored ids", &block_13_callback);
+Block *block_13 = Block_new(blockTypeSpec, "should work with ids", &block_13_callback);
 
 Suite_push_block(suite_4, block_13);
 
-Block *block_14 = Block_new(blockTypeSpec, "should work with structures", &block_14_callback);
+Block *block_14 = Block_new(blockTypeSpec, "should work with underscored ids", &block_14_callback);
 
 Suite_push_block(suite_4, block_14);
 
-Block *block_15 = Block_new(blockTypeSpec, "should work with pointers to structures", &block_15_callback);
+Block *block_15 = Block_new(blockTypeSpec, "should work with structures", &block_15_callback);
 
 Suite_push_block(suite_4, block_15);
 
-Block *block_16 = Block_new(blockTypeSpec, "should work with function calls", &block_16_callback);
+Block *block_16 = Block_new(blockTypeSpec, "should work with pointers to structures", &block_16_callback);
 
 Suite_push_block(suite_4, block_16);
+
+Block *block_17 = Block_new(blockTypeSpec, "should work with function calls", &block_17_callback);
+
+Suite_push_block(suite_4, block_17);
 
 Suite_run(suite_0);
 CSpec_stats();

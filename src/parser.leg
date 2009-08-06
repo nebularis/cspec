@@ -106,7 +106,7 @@
                
   string       = < '"' (!'"' .)* '"' >                      { DUP }
                                                             
-  consume      = < (!EOL .)+ >                              { DUP }
+  consume      = < (!(EOL | ';') .)+ >                      { DUP }
   id           = < [a-zA-Z_]+ >                             { DUP }
   ws           = ' ' | '\t' | nl
   end          = ws? 'end' ws?
