@@ -8,7 +8,6 @@ BDD test framework for the C programming language.
 == TODO:
 
 * fix nesting
-* failure messages
 * more matchers
 * make install 
 * prefix suite descriptions ... dont display unless it
@@ -48,11 +47,11 @@ the literal C code below it.
   }
   
   void block_1_callback() {
-    expect_equal(nbefore_each, 1);
+    expect((match_equal(nbefore_each,  1)));
   }
   
   void block_2_callback() {
-    expect_equal(nbefore_each, 2);
+    expect((match_equal(nbefore_each,  2)));
   }
   
   int main() {
