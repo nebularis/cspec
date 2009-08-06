@@ -64,6 +64,7 @@ the literal C code below it.
     Suite_push_block(suite_0, block_1);
     Suite_push_block(suite_0, block_2);
     Suite_run(suite_0);
+    CSpec_stats();
     return 0;
   }
 
@@ -88,6 +89,8 @@ Below is example stdout with a failed assertion.
   CSpec after_each
     should be called after each spec .
     should be called after each spec .
+    
+  Passes: 8 Failures: 0
   
 == License 
 
