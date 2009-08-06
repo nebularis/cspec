@@ -150,6 +150,14 @@ static int bar(n) { return n * n; }
 ;
  
 }
+  
+  void block_19_callback() {
+
+    Suite *foo = Suite_new("Something");
+    expect((match_equal(foo->description[0],  'S')));
+;
+ 
+}
 int main() {
 
 Suite *suite_0 = Suite_new("CSpec before");
@@ -246,6 +254,10 @@ Suite_push_block(suite_4, block_17);
 Block *block_18 = Block_new(blockTypeSpec, "should work with subscripts", &block_18_callback);
 
 Suite_push_block(suite_4, block_18);
+
+Block *block_19 = Block_new(blockTypeSpec, "should work with pointers to structures using subscripts", &block_19_callback);
+
+Suite_push_block(suite_4, block_19);
 
 Suite_run(suite_0);
 CSpec_stats();

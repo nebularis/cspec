@@ -102,4 +102,9 @@ describe "CSpec assertions"
     foo[0] should equal 't';
     foo[1] should equal 'e';
   end
+  
+  it "should work with pointers to structures using subscripts"
+    Suite *foo = Suite_new("Something");
+    foo->description[0] should equal 'S';
+  end
 end
