@@ -123,7 +123,6 @@ static void usage() {
     "\n"
     "\n    cspec < spec/foo_spec.c > spec/foo.c"
     "\n"
-    "\n"
     "\n  \033[1;01mExample:\033[0m"
     "\n"
     "\n    #include \"cspec.h\""
