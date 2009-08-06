@@ -6,6 +6,9 @@ static int nbefore_each = 0;
 static int nafter = 0;
 static int nafter_each = 0;
 
+static int foo()  { return 4; }
+static int bar(n) { return n * n; }
+
 describe "CSpec before"
   before
     ++nbefore;
@@ -82,5 +85,10 @@ describe "CSpec assertions"
   it "should work with pointers to structures"
     Suite *foo = Suite_new("Something");
     foo->description should equal "Something"
+  end
+  
+  it "should work with function calls"
+    foo() should equal 4
+    bar(2) should equal 4
   end
 end

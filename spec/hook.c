@@ -6,6 +6,9 @@ static int nbefore_each = 0;
 static int nafter = 0;
 static int nafter_each = 0;
 
+static int foo()  { return 4; }
+static int bar(n) { return n * n; }
+
 
  void block_0_callback() {
     ++nbefore;
@@ -120,6 +123,15 @@ static int nafter_each = 0;
 
  
 }
+  
+  void block_16_callback() {
+
+    expect((match_equal(foo(),  4)));
+
+    expect((match_equal(bar(2),  4)));
+
+ 
+}
 int main() {
 
 Suite *suite_0 = Suite_new("CSpec before");
@@ -204,6 +216,10 @@ Suite_push_block(suite_4, block_14);
 Block *block_15 = Block_new(blockTypeSpec, "should work with pointers to structures", &block_15_callback);
 
 Suite_push_block(suite_4, block_15);
+
+Block *block_16 = Block_new(blockTypeSpec, "should work with function calls", &block_16_callback);
+
+Suite_push_block(suite_4, block_16);
 
 Suite_run(suite_0);
 CSpec_stats();
