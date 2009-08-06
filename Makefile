@@ -26,6 +26,6 @@ parse_tests:
 test: all parse_tests build_tests
 	./bin/test
 	
-install: build/cspec
-	cp build/cspec /usr/bin/cspec
+install: bin/cspec
+	cp bin/cspec /usr/bin/cspec
 	
