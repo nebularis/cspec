@@ -21,8 +21,13 @@
 
 #define CSPEC_ERROR(S, ...) fprintf(stderr, S "\n", __VA_ARGS__), exit(1)
 #define CSPEC_MALLOC(T) (T *) malloc(sizeof(T))
-#define CSPEC_REALLOC(F, T) self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T))
-#define CSPEC_INIT(T) T *self = CSPEC_MALLOC(T)
+#define CSPEC_REALLOC(F, T) \
+  self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T)); \
+  if (!self->F) CSPEC_ERROR("failed to re-allocate memory for %s", #T)
+  
+#define CSPEC_INIT(T) \
+  T *self = CSPEC_MALLOC(T); \
+  if (!self) CSPEC_ERROR("failed to allocate memory for %s", #T)
 
 #define expect(E) \
   if (E) printf("\033[1;32m%c\033[0m", '.'), ++CSpec.passes; \

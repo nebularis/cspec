@@ -7,7 +7,7 @@ static int nafter = 0;
 static int nafter_each = 0;
 
 static int foo()  { return 4; }
-static int bar(n) { return n * n; }
+static int bar(int n) { return n * n; }
 
 describe "CSpec before"
   before
