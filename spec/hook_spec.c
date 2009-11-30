@@ -107,4 +107,8 @@ describe "CSpec assertions"
     Suite *foo = Suite_new("Something");
     foo->description[0] should equal 'S';
   end
+  
+  it "should be negatable"
+    foo() should not equal 5;
+  end
 end

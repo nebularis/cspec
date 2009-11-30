@@ -10,7 +10,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include <string.h>
 
 #define CSPEC_VERSION "0.0.2"
@@ -33,7 +32,7 @@
   if (E) printf("\033[1;32m%c\033[0m", '.'), ++CSpec.passes; \
   else printf("\n\033[0;31m      failed:\n        %s\033[0m", #E), ++CSpec.failures;
   
-#define match_equal(A, E) A == E
+#define match_equal(A, E) (A == E)
 
 typedef void (*callback)();
 

@@ -158,6 +158,13 @@ static int bar(int n) { return n * n; }
 ;
  
 }
+  
+  void block_20_callback() {
+
+    expect(!(match_equal(foo(),  5)));
+;
+ 
+}
 int main() {
 
 Suite *suite_0 = Suite_new("CSpec before");
@@ -258,6 +265,10 @@ Suite_push_block(suite_4, block_18);
 Block *block_19 = Block_new(blockTypeSpec, "should work with pointers to structures using subscripts", &block_19_callback);
 
 Suite_push_block(suite_4, block_19);
+
+Block *block_20 = Block_new(blockTypeSpec, "should be negatable", &block_20_callback);
+
+Suite_push_block(suite_4, block_20);
 
 Suite_run(suite_0);
 CSpec_stats();
