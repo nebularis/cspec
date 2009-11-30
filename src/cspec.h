@@ -14,12 +14,14 @@
 
 #define CSPEC_VERSION "0.0.2"
 
-#ifndef CSPEC_BUFFER_SIZE
 #define CSPEC_BUFFER_SIZE 50000
-#endif
 
-#define CSPEC_ERROR(S, ...) fprintf(stderr, S "\n", __VA_ARGS__), exit(1)
-#define CSPEC_MALLOC(T) (T *) malloc(sizeof(T))
+#define CSPEC_ERROR(S, ...) \
+  fprintf(stderr, S "\n", __VA_ARGS__), exit(1)
+
+#define CSPEC_MALLOC(T) \
+  (T *) malloc(sizeof(T))
+
 #define CSPEC_REALLOC(F, T) \
   self->F = (T *) realloc(self->F, ++self->n##F * sizeof(T)); \
   if (!self->F) CSPEC_ERROR("failed to re-allocate memory for %s", #T)
