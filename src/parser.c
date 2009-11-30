@@ -12,17 +12,20 @@
   #define LPAREN '{'
   #define RPAREN '}'
 
-  #define DUP yy = strdup(yytext)
+  #define DUP \
+    yy = strdup(yytext)
   
-  #define LITERAL printf("%s", yytext)
-  
-  #define NODE(T) current = nodeType##T, buf2 = NULL;
+  #define NODE(T) \
+    current = nodeType##T, buf2 = NULL;
     
-  #define NODE2(T, S) current = nodeType##T, buf2 = S;
+  #define NODE2(T, S) \
+    current = nodeType##T, buf2 = S;
   
-  #define END printf("\n%c\n", RPAREN);  
+  #define END \
+    printf("\n%c\n", RPAREN);  
   
-  #define DEFER(S, ...) sprintf(buf, S "\n", __VA_ARGS__); strcat(defer, buf);
+  #define DEFER(S, ...) \
+    sprintf(buf, S "\n", __VA_ARGS__); strcat(defer, buf);
   
   #define YY_INPUT(buf, result, max_size) { \
       int yyc = getc(stdin); \
@@ -412,7 +415,7 @@ YY_ACTION(void) yy_1_expr(char *yytext, int yyleng)
 YY_ACTION(void) yy_3_main(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_3_main\n"));
-   LITERAL ;
+   printf("%s", yytext) ;
 }
 YY_ACTION(void) yy_2_main(char *yytext, int yyleng)
 {
@@ -422,7 +425,7 @@ YY_ACTION(void) yy_2_main(char *yytext, int yyleng)
 YY_ACTION(void) yy_1_main(char *yytext, int yyleng)
 {
   yyprintf((stderr, "do yy_1_main\n"));
-   LITERAL ;
+   puts(yytext) ;
 }
 
 YY_RULE(int) yy__()

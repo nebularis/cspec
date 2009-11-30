@@ -10,6 +10,7 @@ static int foo()  { return 4; }
 static int bar(int n) { return n * n; }
 
 
+
  void block_0_callback() {
     ++nbefore;
  

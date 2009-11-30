@@ -7,17 +7,20 @@
   #define LPAREN '{'
   #define RPAREN '}'
 
-  #define DUP yy = strdup(yytext)
+  #define DUP \
+    yy = strdup(yytext)
   
-  #define LITERAL printf("%s", yytext)
-  
-  #define NODE(T) current = nodeType##T, buf2 = NULL;
+  #define NODE(T) \
+    current = nodeType##T, buf2 = NULL;
     
-  #define NODE2(T, S) current = nodeType##T, buf2 = S;
+  #define NODE2(T, S) \
+    current = nodeType##T, buf2 = S;
   
-  #define END printf("\n%c\n", RPAREN);  
+  #define END \
+    printf("\n%c\n", RPAREN);  
   
-  #define DEFER(S, ...) sprintf(buf, S "\n", __VA_ARGS__); strcat(defer, buf);
+  #define DEFER(S, ...) \
+    sprintf(buf, S "\n", __VA_ARGS__); strcat(defer, buf);
   
   #define YY_INPUT(buf, result, max_size) { \
       int yyc = getc(stdin); \
@@ -77,13 +80,15 @@
   static char *buf2;
 %}
 
-  main         = < (!'describe' .)+ >                       { LITERAL }
+  main         = < (!'describe' .)+ >                       
+                 { puts(yytext) }
                ( suite                                      
                | spec                                       
                | block                                      
                | end                                        { OUT }
                | assertion                                  
-               | < . >                                      { LITERAL }
+               | < . >                                      
+                 { printf("%s", yytext) }
                )*                                           
                
   expr         = < [a-zA-Z_]+ '.'  [a-zA-Z_]+ >             { DUP }
