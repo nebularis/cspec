@@ -16,7 +16,7 @@
 #define CSPEC_VERSION "0.0.2"
 
 #ifndef CSPEC_BUFFER_SIZE
-#define CSPEC_BUFFER_SIZE 5000
+#define CSPEC_BUFFER_SIZE 50000
 #endif
 
 #define CSPEC_ERROR(S, ...) fprintf(stderr, S "\n", __VA_ARGS__), exit(1)
