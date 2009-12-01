@@ -129,4 +129,9 @@ describe "CSpec matchers"
     a = b;
     a should point_to b;
   end
+  
+  it "include should assert that a substring is present"
+    strdup("foobar") should include strdup("foo");
+    strdup("foobar") should not include strdup("baz");
+  end
 end

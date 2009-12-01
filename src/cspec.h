@@ -36,6 +36,7 @@
   
 #define match_equal(A, E) (A == E)
 #define match_point_to(A, E) (A == E)
+#define match_include(A, E) (strstr(A, E))
 
 typedef void (*callback)();
 

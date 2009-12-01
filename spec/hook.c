@@ -191,6 +191,15 @@ static int bar(int n) { return n * n; }
 ;
  
 }
+  
+  void block_23_callback() {
+
+    expect((match_include(strdup("foobar"),  strdup("foo"))));
+;
+    expect(!(match_include(strdup("foobar"),  strdup("baz"))));
+;
+ 
+}
 int main() {
 
 Suite *suite_0 = Suite_new("CSpec before");
@@ -307,6 +316,10 @@ Suite_push_block(suite_5, block_21);
 Block *block_22 = Block_new(blockTypeSpec, "point_to should assert that two pointers are the same", &block_22_callback);
 
 Suite_push_block(suite_5, block_22);
+
+Block *block_23 = Block_new(blockTypeSpec, "include should assert that a substring is present", &block_23_callback);
+
+Suite_push_block(suite_5, block_23);
 
 Suite_run(suite_0);
 CSpec_stats();
