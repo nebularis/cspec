@@ -1,4 +1,10 @@
 
+0.2.0 / 2009-11-30
+==================
+
+  * Changed; better usage output with version
+  * Fixed when failures are present exit with > 0
+
 0.1.0 / 2009-11-30
 ==================
 
