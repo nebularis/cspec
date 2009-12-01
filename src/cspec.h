@@ -34,6 +34,7 @@
   if (E) printf("\033[1;32m%c\033[0m", '.'), ++CSpec.passes; \
   else printf("\n\033[0;31m      failed:\n        %s\033[0m", #E), ++CSpec.failures;
   
+#define match_be(A, E) (A == E)
 #define match_equal(A, E) (A == E)
 #define match_point_to(A, E) (A == E)
 #define match_include(A, E) (strstr(A, E))

@@ -182,17 +182,19 @@ static int bar(int n) { return n * n; }
   
   void block_22_callback() {
 
-    char *a = strdup("foo");
-    char *b = strdup("foo");
-    expect(!(match_point_to(a,  b)));
-;
-    a = b;
-    expect((match_point_to(a,  b)));
+    expect((match_be(NULL,  NULL)));
 ;
  
 }
   
   void block_23_callback() {
+
+    expect((match_point_to(NULL,  NULL)));
+;
+ 
+}
+  
+  void block_24_callback() {
 
     expect((match_include(strdup("foobar"),  strdup("foo"))));
 ;
@@ -201,7 +203,7 @@ static int bar(int n) { return n * n; }
  
 }
   
-  void block_24_callback() {
+  void block_25_callback() {
 
     expect((match_start_with("foobar",  "foo")));
 ;
@@ -322,17 +324,21 @@ Block *block_21 = Block_new(blockTypeSpec, "equal should assert that two pointer
 
 Suite_push_block(suite_5, block_21);
 
-Block *block_22 = Block_new(blockTypeSpec, "point_to should assert that two pointers are the same", &block_22_callback);
+Block *block_22 = Block_new(blockTypeSpec, "be should alias equal", &block_22_callback);
 
 Suite_push_block(suite_5, block_22);
 
-Block *block_23 = Block_new(blockTypeSpec, "include should assert that a substring is present", &block_23_callback);
+Block *block_23 = Block_new(blockTypeSpec, "point_to should alias equal", &block_23_callback);
 
 Suite_push_block(suite_5, block_23);
 
-Block *block_24 = Block_new(blockTypeSpec, "start_with should assert that a substring is at the beginning", &block_24_callback);
+Block *block_24 = Block_new(blockTypeSpec, "include should assert that a substring is present", &block_24_callback);
 
 Suite_push_block(suite_5, block_24);
+
+Block *block_25 = Block_new(blockTypeSpec, "start_with should assert that a substring is at the beginning", &block_25_callback);
+
+Suite_push_block(suite_5, block_25);
 
 Suite_run(suite_0);
 CSpec_stats();

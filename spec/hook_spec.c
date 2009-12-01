@@ -122,12 +122,12 @@ describe "CSpec matchers"
     a should equal b;
   end
   
-  it "point_to should assert that two pointers are the same"
-    char *a = strdup("foo");
-    char *b = strdup("foo");
-    a should not point_to b;
-    a = b;
-    a should point_to b;
+  it "be should alias equal"
+    NULL should be NULL;
+  end
+  
+  it "point_to should alias equal"
+    NULL should point_to NULL;
   end
   
   it "include should assert that a substring is present"
