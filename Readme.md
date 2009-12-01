@@ -10,13 +10,13 @@
   
 ## Installation
 
-  $ make
-  $ make install
+     $ make
+     $ make install
   
 ## Usage
 
-  $ cspec --help
-  $ cspec < spec/foo_spec.c > spec/foo.c
+    $ cspec --help
+    $ cspec < spec/foo_spec.c > spec/foo.c
 
 ## Example CSpec
 
