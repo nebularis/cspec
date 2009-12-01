@@ -776,22 +776,11 @@ YY_PARSE(int) YYPARSE(void)
 #endif
 
 
-static void usage() {
-  printf(
-    "\n  \033[1;01mCSpec\033[0m\n"
-    "\n    The cspec binary converts the CSpec grammar into literal"
-    "\n    C source via stdin and stdout."
-    "\n"
-    "\n  \033[1;01mUsage:\033[0m"
-    "\n"
-    "\n    cspec < spec/foo_spec.c > spec/foo.c"
-    "\n"
-    "\n");
-}
-
 int main(int argc, char **argv) {
   if (argc > 1)
-    usage();
+    printf("cspec: %s\n"
+           "usage: cspec < in.c > out.c\n", 
+           CSPEC_VERSION);
   else {
     DEFER("int main() %c\n", LPAREN)
     while (YYPARSE()) ;
