@@ -632,9 +632,9 @@ YY_RULE(int) yy_expr()
 }
 YY_RULE(int) yy_assertion()
 {  int yypos0= yypos, yythunkpos0= yythunkpos;  yyDo(yyPush, 3, 0);
-  yyprintf((stderr, "%s\n", "assertion"));
-  {  int yypos69= yypos, yythunkpos69= yythunkpos;  if (!yy_expr()) goto l70;  yyDo(yySet, -3, 0);  if (!yy_s()) goto l70;  if (!yymatchString("should")) goto l70;  if (!yy_s()) goto l70;  if (!yymatchString("not")) goto l70;  if (!yy_s()) goto l70;  if (!yy_id()) goto l70;  yyDo(yySet, -2, 0);  if (!yy_consume()) goto l70;  yyDo(yySet, -1, 0);  yyDo(yy_1_assertion, yybegin, yyend);  goto l69;
-  l70:;	  yypos= yypos69; yythunkpos= yythunkpos69;  if (!yy_expr()) goto l68;  yyDo(yySet, -3, 0);  if (!yy_s()) goto l68;  if (!yymatchString("should")) goto l68;  if (!yy_s()) goto l68;  if (!yy_id()) goto l68;  yyDo(yySet, -2, 0);  if (!yy_consume()) goto l68;  yyDo(yySet, -1, 0);  yyDo(yy_2_assertion, yybegin, yyend);
+  yyprintf((stderr, "%s\n", "assertion"));  if (!yy_expr()) goto l68;  yyDo(yySet, -3, 0);  if (!yy_s()) goto l68;  if (!yymatchString("should")) goto l68;  if (!yy_s()) goto l68;
+  {  int yypos69= yypos, yythunkpos69= yythunkpos;  if (!yymatchString("not")) goto l70;  if (!yy_s()) goto l70;  if (!yy_id()) goto l70;  yyDo(yySet, -2, 0);  if (!yy_consume()) goto l70;  yyDo(yySet, -1, 0);  yyDo(yy_1_assertion, yybegin, yyend);  goto l69;
+  l70:;	  yypos= yypos69; yythunkpos= yythunkpos69;  if (!yy_id()) goto l68;  yyDo(yySet, -2, 0);  if (!yy_consume()) goto l68;  yyDo(yySet, -1, 0);  yyDo(yy_2_assertion, yybegin, yyend);
   }
   l69:;	
   yyprintf((stderr, "  ok   %s @ %s\n", "assertion", yybuf+yypos));  yyDo(yyPop, 3, 0);
