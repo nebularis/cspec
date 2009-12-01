@@ -114,6 +114,10 @@ Below is example stdout with a failed assertion.
     
       "foobar" should start_with "foo";
       "foobar" should not start_with "bar";
+      
+## More Information
+
+  * [Example Spec from YAMP](http://gist.github.com/246057)
   
 ## License 
 
