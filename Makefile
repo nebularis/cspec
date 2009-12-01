@@ -1,6 +1,7 @@
 
 CC = gcc
 LEG = leg
+BIN = bin/cspec
 CFLAGS = -std=c99 -I src
 
 all: clean parser build
@@ -13,7 +14,7 @@ clean:
 build: 
 	mkdir build bin
 	$(CC) -c src/cspec.c $(CFLAGS) -o ./build/cspec.o
-	$(CC) src/*.c $(CFLAGS) -o ./bin/cspec
+	$(CC) src/*.c $(CFLAGS) -o $(BIN)
 
 parser:
 	$(LEG) src/parser.leg > src/parser.c
@@ -22,11 +23,11 @@ build_tests:
 	$(CC) ./build/cspec.o spec/hook.c $(CFLAGS) -o ./bin/test
 		
 parse_tests:
-	./bin/cspec < spec/hook_spec.c > spec/hook.c
+	./$(BIN) < spec/hook_spec.c > spec/hook.c
 		
 test: all parse_tests build_tests
 	./bin/test
 	
-install: bin/cspec
-	install bin/cspec /usr/bin/cspec
+install: $(BIN)
+	install $(BIN) /usr/bin/cspec
 	
