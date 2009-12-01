@@ -2,6 +2,7 @@
 CC = gcc
 LEG = leg
 BIN = bin/cspec
+DEST = /usr/bin/cspec
 CFLAGS = -std=c99 -I src
 
 all: clean parser build
@@ -29,5 +30,5 @@ test: all parse_tests build_tests
 	./bin/test
 	
 install: $(BIN)
-	install $(BIN) /usr/bin/cspec
+	install $(BIN) $(DEST)
 	
