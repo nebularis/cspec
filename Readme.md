@@ -6,6 +6,7 @@
 ## Todo
 
   * fix nesting
+  * fix expression ... tries to convert it "should foo" into an assertion
   * refactor messy parser and lame buffering
   
 ## Installation
