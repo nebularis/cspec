@@ -342,7 +342,7 @@ Suite_push_block(suite_5, block_25);
 
 Suite_run(suite_0);
 CSpec_stats();
-return 0;
+return CSpec.failures;
 }
 
 
