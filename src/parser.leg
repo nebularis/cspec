@@ -136,7 +136,7 @@
   end          = ws? 'end' ws?
   EOL          = nl | EOF                                
   EOF          = !.                                      
-  nl           = '\n' | '\r\n' | '\r'                    
+  nl           = '\r\n' | '\r' | '\n'                    
   s            = [ \t]+                                  
   -            = [ \t]*                                  
                                                          

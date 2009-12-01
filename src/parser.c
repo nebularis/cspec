@@ -453,9 +453,9 @@ YY_RULE(int) yy_EOF()
 YY_RULE(int) yy_nl()
 {  int yypos0= yypos, yythunkpos0= yythunkpos;
   yyprintf((stderr, "%s\n", "nl"));
-  {  int yypos7= yypos, yythunkpos7= yythunkpos;  if (!yymatchChar('\n')) goto l8;  goto l7;
-  l8:;	  yypos= yypos7; yythunkpos= yythunkpos7;  if (!yymatchString("\r\n")) goto l9;  goto l7;
-  l9:;	  yypos= yypos7; yythunkpos= yythunkpos7;  if (!yymatchChar('\r')) goto l6;
+  {  int yypos7= yypos, yythunkpos7= yythunkpos;  if (!yymatchString("\r\n")) goto l8;  goto l7;
+  l8:;	  yypos= yypos7; yythunkpos= yythunkpos7;  if (!yymatchChar('\r')) goto l9;  goto l7;
+  l9:;	  yypos= yypos7; yythunkpos= yythunkpos7;  if (!yymatchChar('\n')) goto l6;
   }
   l7:;	
   yyprintf((stderr, "  ok   %s @ %s\n", "nl", yybuf+yypos));
