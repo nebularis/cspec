@@ -35,6 +35,7 @@
   else printf("\n\033[0;31m      failed:\n        %s\033[0m", #E), ++CSpec.failures;
   
 #define match_equal(A, E) (A == E)
+#define match_point_to(A, E) (A == E)
 
 typedef void (*callback)();
 

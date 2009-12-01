@@ -166,6 +166,31 @@ static int bar(int n) { return n * n; }
 ;
  
 }
+
+
+  void block_21_callback() {
+
+    char *a = strdup("foo");
+    char *b = strdup("foo");
+    expect(!(match_equal(a,  b)));
+;
+    a = b;
+    expect((match_equal(a,  b)));
+;
+ 
+}
+  
+  void block_22_callback() {
+
+    char *a = strdup("foo");
+    char *b = strdup("foo");
+    expect(!(match_point_to(a,  b)));
+;
+    a = b;
+    expect((match_point_to(a,  b)));
+;
+ 
+}
 int main() {
 
 Suite *suite_0 = Suite_new("CSpec before");
@@ -270,6 +295,18 @@ Suite_push_block(suite_4, block_19);
 Block *block_20 = Block_new(blockTypeSpec, "should be negatable", &block_20_callback);
 
 Suite_push_block(suite_4, block_20);
+
+Suite *suite_5 = Suite_new("CSpec matchers");
+
+Suite_push_suite(suite_4, suite_5);
+
+Block *block_21 = Block_new(blockTypeSpec, "equal should assert that two pointers are the same", &block_21_callback);
+
+Suite_push_block(suite_5, block_21);
+
+Block *block_22 = Block_new(blockTypeSpec, "point_to should assert that two pointers are the same", &block_22_callback);
+
+Suite_push_block(suite_5, block_22);
 
 Suite_run(suite_0);
 CSpec_stats();

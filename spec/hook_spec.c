@@ -112,3 +112,21 @@ describe "CSpec assertions"
     foo() should not equal 5;
   end
 end
+
+describe "CSpec matchers"
+  it "equal should assert that two pointers are the same"
+    char *a = strdup("foo");
+    char *b = strdup("foo");
+    a should not equal b;
+    a = b;
+    a should equal b;
+  end
+  
+  it "point_to should assert that two pointers are the same"
+    char *a = strdup("foo");
+    char *b = strdup("foo");
+    a should not point_to b;
+    a = b;
+    a should point_to b;
+  end
+end
