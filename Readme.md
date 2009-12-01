@@ -99,15 +99,18 @@ Below is example stdout with a failed assertion.
 ## Core Matchers
 
     - be, equal, point_to
+    
       foo should be NULL;
       foo should point_to bar;
       str should equal "foo";
       
     - include
+    
       "foobar" should include "foo";
       "foobar" should include "bar";
       
     - start_with
+    
       "foobar" should start_with "foo";
       "foobar" should not start_with "bar";
   
