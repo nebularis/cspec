@@ -6,6 +6,7 @@ BDD test framework for the C programming language.
 == TODO:
 
 * fix nesting
+* refactor messy parser and lame buffering
   
 == Installation
 
