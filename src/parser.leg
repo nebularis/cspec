@@ -85,7 +85,8 @@
                ( suite                                      
                | spec                                       
                | block                                      
-               | end                                        { OUT }
+               | end                                        
+                 { OUT }
                | assertion                                  
                | < . >                                      
                  { printf("%s", yytext) }
@@ -122,10 +123,15 @@
                  { ASSERTION(a, b, c, 0) }
                )
                
-  string       = < '"' (!'"' .)* '"' >                      { DUP }
+  string       = < '"' (!'"' .)* '"' >                      
+                 { DUP }
                                                             
-  consume      = < (!(EOL | ';') .)+ >                      { DUP }
-  id           = < [a-zA-Z_]+ >                             { DUP }
+  consume      = < (!(EOL | ';') .)+ >                      
+                 { DUP }
+                 
+  id           = < [a-zA-Z_]+ >                             
+                 { DUP }
+                 
   ws           = ' ' | '\t' | nl
   end          = ws? 'end' ws?
   EOL          = nl | EOF                                
