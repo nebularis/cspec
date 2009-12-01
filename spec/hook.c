@@ -200,6 +200,15 @@ static int bar(int n) { return n * n; }
 ;
  
 }
+  
+  void block_24_callback() {
+
+    expect((match_start_with("foobar",  "foo")));
+;
+    expect(!(match_start_with("barfoo",  "foo")));
+;
+ 
+}
 int main() {
 
 Suite *suite_0 = Suite_new("CSpec before");
@@ -320,6 +329,10 @@ Suite_push_block(suite_5, block_22);
 Block *block_23 = Block_new(blockTypeSpec, "include should assert that a substring is present", &block_23_callback);
 
 Suite_push_block(suite_5, block_23);
+
+Block *block_24 = Block_new(blockTypeSpec, "start_with should assert that a substring is at the beginning", &block_24_callback);
+
+Suite_push_block(suite_5, block_24);
 
 Suite_run(suite_0);
 CSpec_stats();

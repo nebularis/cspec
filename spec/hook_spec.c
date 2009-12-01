@@ -134,4 +134,9 @@ describe "CSpec matchers"
     strdup("foobar") should include strdup("foo");
     strdup("foobar") should not include strdup("baz");
   end
+  
+  it "start_with should assert that a substring is at the beginning"
+    "foobar" should start_with "foo";
+    "barfoo" should not start_with "foo";
+  end
 end
