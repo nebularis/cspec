@@ -115,6 +115,14 @@ Below is example stdout with a failed assertion.
       "foobar" should start_with "foo";
       "foobar" should not start_with "bar";
       
+## Example Matcher Definitions
+
+    #define match_be(A, E) (A == E)
+    #define match_equal(A, E) (A == E)
+    #define match_point_to(A, E) (A == E)
+    #define match_include(A, E) (strstr(A, E))
+    #define match_start_with(A, E) (strstr(A, E) == A)
+      
 ## More Information
 
   * [Example Spec from YAMP](http://gist.github.com/246057)
